@@ -3,27 +3,32 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 
 import NavBar from "./components/NavBar";
-import Pagination from "./components/Pagination";
+import Paginations from "./components/Pagination";
 import Body from "./components/Body";
-import MyModal from "./components/MyModal";
 import Footer from "./components/Footer";
 
 function App() {
   const [token, setToken] = useState(null);
-  const [githubIssues, setGithubIssues] = useState([])
-  const [pagination, setPagination] = useState(1);
-  const [modalShow, setModalShow] = React.useState(false);
+  const [repoOwner, setRepoOwner] = useState(`facebook`)
+  const [repoName, setRepoName] = useState(`react`)
+  const [repoInfo, setRepoInfo] = useState({})
+  const [githubIssues, setGithubIssues] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+    const [sortIssues, setSortIssues] = useState(`comments`)
+  
+  console.log("repoOwner", repoOwner)
+  console.log("repoName", repoName)
 
- useEffect(() => {
-    const clientId = "05449736a72133433d33";
-    const secretKey = "d0115c0e09c202d8e50ff6260e374294c187ab5a"
+  useEffect(() => {
+    const clientId = `05449736a72133433d33`;
+    const secretKey = `d0115c0e09c202d8e50ff6260e374294c187ab5a`
 
     const existingToken = sessionStorage.getItem("token");
     const accessToken =
       window.location.search.split("=")[0] === "?access_token"
         ? window.location.search.split("=")[1]
         : null;
-  console.log('object')
+
     if (!accessToken && !existingToken) {
       window.location.replace(
         `https://github.com/login/oauth/authorize?scope=user:email,repo&client_id=${clientId}&client_secret=${secretKey}`
@@ -31,6 +36,8 @@ function App() {
     }
 
     if (accessToken) {
+      // console.log(New accessToken: ${accessToken});
+
       sessionStorage.setItem("token", accessToken);
       setToken(accessToken);
     }
@@ -40,18 +47,53 @@ function App() {
     }
   }, []);
 
+  useEffect(()=>{
+    getGithubIssuesData()
+  },[])
+
+  useEffect(()=>{
+    getGithubRepo()
+  },[])
+
+  // get react issues
+  const getGithubIssuesData = async () => {
+
+    const url = `https://api.github.com/repos/${repoOwner}/${repoName}/issues?page=${currentPage}?per_page=20&sort=${sortIssues}&order=asc`
+    const response = await fetch(url)
+
+    // get header link
+    const link = await response.headers.get('link')
+
+    const githubIssuesData = await response.json()
+    setGithubIssues(githubIssuesData);
+  }
+
+
+  // get react repo to find total issues
+  const getGithubRepo = async () => {
+    const url = `https://api.github.com/repos/${repoOwner}/${repoName}`
+    const response = await fetch(url)
+    const repoData = await response.json();
+    setRepoInfo(repoData)
+  }
 
   return (
     <div className="App">
-      <h1>Hello World!</h1>
-        <NavBar />
+      {/* <h1>Hello World!</h1> */}
+        <NavBar 
+          setRepoOwner = {setRepoOwner}
+          setRepoName = {setRepoName}        
+        
+        />
       <section className="section">
-        <Pagination />
-        <Body />
-        <MyModal 
-        show={modalShow}
-        // onHide={() => setModalShow(false)}
-           />
+        <Paginations 
+          repoInfo = {repoInfo}
+          currentPage = {currentPage}
+          setCurrentPage = {setCurrentPage}
+          getGithubIssuesData = {()=>getGithubIssuesData()}
+          
+        />
+        <Body githubIssues={githubIssues} />
         <Footer />
       </section>
     </div>
