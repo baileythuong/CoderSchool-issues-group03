@@ -9,7 +9,10 @@ import Footer from "./components/Footer";
 
 function App() {
   const [token, setToken] = useState(null);
-
+  const [githubIssues, setGithubIssues] = useState([])
+  const [pagination, setPagination] = useState(1);
+  const [modalOpen, setModalOpen] = useState(false);
+  
   useEffect(() => {
     const clientId = `05449736a72133433d33`;
 
@@ -26,7 +29,7 @@ function App() {
     }
 
     if (accessToken) {
-      console.log(`New accessToken: ${accessToken}`);
+      // console.log(`New accessToken: ${accessToken}`);
 
       sessionStorage.setItem("token", accessToken);
       setToken(accessToken);
@@ -37,14 +40,27 @@ function App() {
     }
   }, []);
 
+  useEffect(()=>{getGithubIssuesData()},[])
+  const getGithubIssuesData = async () => {
+
+    const url = `https://api.github.com/repos/vmg/redcarpet/issues?page=${pagination}?per_page=20`
+    const response = await fetch(url)
+    const githubIssuesData = await response.json()
+    setGithubIssues(githubIssuesData);
+    console.log("Github issues", githubIssuesData);
+  }
+
+
   return (
     <div className="App">
       <h1>Hello World!</h1>
-      <NavBar />
-      <Pagination />
-      <Body />
-      <Modal />
-      <Footer />
+        <NavBar />
+      <section className="section">
+        <Pagination />
+        <Body />
+        <Modal />
+        <Footer />
+      </section>
     </div>
   );
 }
