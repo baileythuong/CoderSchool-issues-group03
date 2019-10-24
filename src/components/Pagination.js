@@ -2,7 +2,7 @@ import React from "react";
 import Pagination from "react-bootstrap/Pagination";
 
 export default function Paginations(props) {
-    let totalPage = props.repoInfo.open_issues/20;
+    let totalPage = props.repoInfo.open_issues%20? props.repoInfo.open_issues/20 : props.repoInfo.open_issues/20 + 1;
     let pages = [];
     for (let i = 1; i <= totalPage; i++) pages.push(i)
 
