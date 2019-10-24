@@ -26,7 +26,7 @@ function App() {
     }
 
     if (accessToken) {
-      console.log(`New accessToken: ${accessToken}`);
+      // console.log(`New accessToken: ${accessToken}`);
 
       sessionStorage.setItem("token", accessToken);
       setToken(accessToken);
