@@ -2,38 +2,43 @@ import React from "react";
 import {
   Navbar,
   Nav,
-  NavDropdown,
   Form,
   FormControl,
   Button
 } from "react-bootstrap";
 
-export default function NavBar() {
+export default function NavBar(props) {
+  const handleSearchInput = (e) => {
+    if(e.keyCode === 13) return props.getGithubIssuesData
+    let repoOwner = e.target.value.split('/')[0]
+    let repoName = e.target.value.split('/')[1]
+    props.setRepoOwner(repoOwner)
+    props.setRepoName(repoName)
+  }
   return (
     <div>
-      <Navbar bg="light" expand="lg">
-        <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+      <Navbar bg="dark" variant="dark" expand="lg">
+        <Navbar.Brand href="#home">
+        <img
+        src="https://cdn0.iconfinder.com/data/icons/shift-logotypes/32/Github-512.png"
+        width="30"
+        height="30"
+        className="d-inline-block align-top"
+        alt="React Bootstrap logo"
+        />
+        </Navbar.Brand>
+        <Form inline>
+            <FormControl type="text" placeholder="Search or jump to..." className="justify-content-start mr-2" onChange={e=>handleSearchInput(e)}/>
+            <Button variant="outline-light" onClick={()=>props.getGithubIssuesData}>Search</Button>
+          </Form>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#link">Link</Nav.Link>
-            <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Another action
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
-                Separated link
-              </NavDropdown.Item>
-            </NavDropdown>
+            <Nav.Link href="#home">Pull request</Nav.Link>
+            <Nav.Link href="#link">Issues</Nav.Link>
+            <Nav.Link href="#link">Marketplace</Nav.Link>
+            <Nav.Link href="#link">Explore</Nav.Link>
           </Nav>
-          <Form inline>
-            <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-            <Button variant="outline-success">Search</Button>
-          </Form>
         </Navbar.Collapse>
       </Navbar>
     </div>
