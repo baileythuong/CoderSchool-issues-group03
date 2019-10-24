@@ -5,67 +5,65 @@ import "./App.css";
 import NavBar from "./components/NavBar";
 import Pagination from "./components/Pagination";
 import Body from "./components/Body";
-import Modal from "./components/Modal";
+import MyModal from "./components/Modal";
 import Footer from "./components/Footer";
 
 function App() {
   const [token, setToken] = useState(null);
-  const [githubIssues, setGithubIssues] = useState([])
+  const [githubIssues, setGithubIssues] = useState([]);
   const [pagination, setPagination] = useState(1);
   const [modalOpen, setModalOpen] = useState(false);
-  
-  // useEffect(() => {
-  //   const clientId = `05449736a72133433d33`;
 
-  //   const existingToken = sessionStorage.getItem("token");
-  //   const accessToken =
-  //     window.location.search.split("=")[0] === "?access_token"
-  //       ? window.location.search.split("=")[1]
-  //       : null;
+  useEffect(() => {
+    const clientId = `05449736a72133433d33`;
+    const secretKey = "d0115c0e09c202d8e50ff6260e374294c187ab5a";
 
-  //   if (!accessToken && !existingToken) {
-  //     window.location.replace(
-  //       `https://github.com/login/oauth/authorize?scope=user:email,repo&client_id=${clientId}`
-  //     );
-  //   }
+    const existingToken = sessionStorage.getItem("token");
+    const accessToken =
+      window.location.search.split("=")[0] === "?access_token"
+        ? window.location.search.split("=")[1]
+        : null;
 
-  //   if (accessToken) {
-  //     // console.log(`New accessToken: ${accessToken}`);
+    if (!accessToken && !existingToken) {
+      window.location.replace(
+        `https://github.com/login/oauth/authorize?scope=user:email,repo&client_id=${clientId}&client_secret=${secretKey}`
+      );
+    }
 
-  //     sessionStorage.setItem("token", accessToken);
-  //     setToken(accessToken);
-  //   }
+    if (accessToken) {
+      // console.log(`New accessToken: ${accessToken}`);
 
-  //   if (existingToken) {
-  //     setToken(existingToken);
-  //   }
-  // }, []);
+      sessionStorage.setItem("token", accessToken);
+      setToken(accessToken);
+    }
 
-  // useEffect(()=>{
-  //   getGithubIssuesData()
-  // },[])
+    if (existingToken) {
+      setToken(existingToken);
+    }
+  }, []);
 
-  // const getGithubIssuesData = async () => {
-
-  //   const url = `https://api.github.com/repos/vmg/redcarpet/issues?page=${pagination}?per_page=20`
-  //   const response = await fetch(url)
-  //   const githubIssuesData = await response.json()
-  //   setGithubIssues(githubIssuesData);
-  //   console.log("Github issues", githubIssuesData);
-  //   console.log("hello")
-  // }
-
+  useEffect(() => {
+    getGithubIssuesData();
+  }, []);
+  // console.log(githubIssues);
+  const getGithubIssuesData = async () => {
+    const url = `https://api.github.com/repos/vmg/redcarpet/issues?page=${pagination}&per_page=20`;
+    const response = await fetch(url);
+    const githubIssuesData = await response.json();
+    setGithubIssues(githubIssuesData);
+    console.log("Github issues", githubIssuesData);
+    console.log("hello");
+  };
 
   return (
     <div className="App">
-      <h1>Hello World!</h1>
-        <NavBar />
-      <section className="section">
+      <NavBar />
+
+      <div className="container">
         <Pagination />
-        <Body />
-        <Modal />
-        <Footer />
-      </section>
+        <Body githubIssues={githubIssues} />
+      </div>
+      <Footer />
     </div>
   );
 }
