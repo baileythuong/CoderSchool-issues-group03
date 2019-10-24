@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+// import 'bootstrap/dist/css/bootstrap.min.css';
 import "./App.css";
 
 import NavBar from "./components/NavBar";
@@ -9,15 +10,20 @@ import Footer from "./components/Footer";
 
 function App() {
   const [token, setToken] = useState(null);
-  const [reactRepo, setReactRepo] = useState({})
+  const [repoOwner, setRepoOwner] = useState(`facebook`)
+  const [repoName, setRepoName] = useState(`react`)
+  const [repoInfo, setRepoInfo] = useState({})
   const [githubIssues, setGithubIssues] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [modalOpen, setModalOpen] = useState(false);
-
-  console.log(reactRepo)
+  const [sortIssues, setSortIssues] = useState(`comments`)
   
+  console.log("repoOwner", repoOwner)
+  console.log("repoName", repoName)
+
   useEffect(() => {
     const clientId = `05449736a72133433d33`;
+    const secretKey = `d0115c0e09c202d8e50ff6260e374294c187ab5a`
 
     const existingToken = sessionStorage.getItem("token");
     const accessToken =
@@ -27,12 +33,12 @@ function App() {
 
     if (!accessToken && !existingToken) {
       window.location.replace(
-        `https://github.com/login/oauth/authorize?scope=user:email,repo&client_id=${clientId}`
+        `https://github.com/login/oauth/authorize?scope=user:email,repo&client_id=${clientId}&client_secret=${secretKey}`
       );
     }
 
     if (accessToken) {
-      // console.log(`New accessToken: ${accessToken}`);
+      // console.log(New accessToken: ${accessToken});
 
       sessionStorage.setItem("token", accessToken);
       setToken(accessToken);
@@ -47,10 +53,14 @@ function App() {
     getGithubIssuesData()
   },[])
 
+  useEffect(()=>{
+    getGithubRepo()
+  },[])
+
   // get react issues
   const getGithubIssuesData = async () => {
 
-    const url = `https://api.github.com/repos/facebook/react/issues?page=${currentPage}?per_page=20`
+    const url = `https://api.github.com/repos/${repoOwner}/${repoName}/issues?page=${currentPage}?per_page=20&sort=${sortIssues}&order=asc`
     const response = await fetch(url)
 
     // get header link
@@ -62,22 +72,27 @@ function App() {
 
 
   // get react repo to find total issues
-  const getGithubReactRepo = async () => {
-    const url = `https://api.github.com/repos/facebook/react`
+  const getGithubRepo = async () => {
+    const url = `https://api.github.com/repos/${repoOwner}/${repoName}`
     const response = await fetch(url)
-    const reactRepoData = await response.json();
-    setReactRepo(reactRepoData)
+    const repoData = await response.json();
+    setRepoInfo(repoData)
   }
 
   return (
     <div className="App">
-      <h1>Hello World!</h1>
-        <NavBar />
+      {/* <h1>Hello World!</h1> */}
+        <NavBar 
+          setRepoOwner = {setRepoOwner}
+          setRepoName = {setRepoName}        
+        
+        />
       <section className="section">
         <Paginations 
-          reactRepo = {reactRepo}
+          repoInfo = {repoInfo}
           currentPage = {currentPage}
           setCurrentPage = {setCurrentPage}
+          getGithubIssuesData = {()=>getGithubIssuesData()}
           
         />
         <Body />
