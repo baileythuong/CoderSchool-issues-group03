@@ -10,10 +10,14 @@ import Footer from "./components/Footer";
 
 function App() {
   const [token, setToken] = useState(null);
-  const [githubIssues, setGithubIssues] = useState([])
+  const [repoOwner, setRepoOwner] = useState(`facebook`)
+  const [repoName, setRepoName] = useState(`react`)
+  const [repoInfo, setRepoInfo] = useState({})
+  const [githubIssues, setGithubIssues] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [modalOpen, setModalOpen] = useState(false);
-  
+  const [sortIssues, setSortIssues] = useState(`comments`)
+  const [filterParameter, setFilterParameter] = useState({})
   useEffect(() => {
     const clientId = `05449736a72133433d33`;
     const secretKey = `d0115c0e09c202d8e50ff6260e374294c187ab5a`
@@ -43,25 +47,68 @@ function App() {
   }, []);
 
   useEffect(()=>{
+    getGithubRepo()
+  },[])
+
+  useEffect(() => {
+    getGithubIssuesData()
+  }, [currentPage])
+
+  useEffect(()=>{
     getGithubIssuesData()
   },[])
 
+  // useEffect(()=>{
+  //   getGithubRepo()
+  // },[]
+
+
+
+  // get react issues
   const getGithubIssuesData = async () => {
-    const url = `https://api.github.com/repos/facebook/react/issues?page=${currentPage}?per_page=20`
+
+    const url = `https://api.github.com/repos/${repoOwner}/${repoName}/issues?page=${currentPage}&per_page=20&sort=${sortIssues}&order=asc`
     const response = await fetch(url)
+
+    // get header link
+    const link = await response.headers.get('link')
+
     const githubIssuesData = await response.json()
     setGithubIssues(githubIssuesData);
-    console.log("github issues data", githubIssuesData);
   }
 
 
+  // get react repo to find total issues
+  const getGithubRepo = async () => {
+    const url = `https://api.github.com/repos/${repoOwner}/${repoName}`
+    const response = await fetch(url)
+    const repoData = await response.json();
+    setRepoInfo(repoData)
+  }
+
   return (
     <div className="App">
-        <NavBar />
+      {/* <h1>Hello World!</h1> */}
+        <NavBar 
+          setRepoOwner = {setRepoOwner}
+          setRepoName = {setRepoName}        
+          getGithubIssuesData = {getGithubIssuesData}
+          getGithubRepo = {getGithubRepo}
+        />
       <section className="section">
-        <Pagination />
-        <Body />
-        <Modal />
+       
+        <Body 
+        githubIssues = {githubIssues}
+        repoInfo = {repoInfo}
+        />
+
+        <Pagination 
+          repoInfo = {repoInfo}
+          currentPage = {currentPage}
+          setCurrentPage = {setCurrentPage}
+        
+        />
+        
         <Footer />
       </section>
     </div>
