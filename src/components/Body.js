@@ -23,8 +23,8 @@ export default function Body(props) {
         <Card>
           <Card.Header>
             <div className="d-flex flex-row">
-              <h5 className="small">716 open</h5>
-              <h5 className="small">closed</h5>
+              <h5 className="small">{props.repoInfo.open_issues}</h5>
+              <h5 className="small">Open</h5>
               <Nav className="ml-auto">
                 <NavDropdown title="Author" id="basic-nav-dropdown">
                   <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
@@ -112,7 +112,7 @@ export default function Body(props) {
               </Nav>
             </div>
           </Card.Header>
-          {props.githubIssues.map(issue => {
+          {props.githubIssues && props.githubIssues.map(issue => {
             return (
               <ListGroup variant="flush">
                 <ListGroup.Item action>
