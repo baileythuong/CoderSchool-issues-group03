@@ -8,16 +8,19 @@ import Body from "./components/Body";
 import MyModal from "./components/Modal";
 import Footer from "./components/Footer"
 
+const access_token = `82a9fe65aa85b411fb5acaeb3a81291094c9a2c1`;
+
 function App() {
   const [token, setToken] = useState(null);
-  const [repoOwner, setRepoOwner] = useState(`facebook`)
-  const [repoName, setRepoName] = useState(`react`)
-  const [repoInfo, setRepoInfo] = useState({})
+  const [repoOwner, setRepoOwner] = useState(`facebook`);
+  const [repoName, setRepoName] = useState(`react`);
+  const [repoInfo, setRepoInfo] = useState({});
   const [githubIssues, setGithubIssues] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [modalOpen, setModalOpen] = useState(false);
-  const [sortIssues, setSortIssues] = useState(`comments`)
-  const [filterParameter, setFilterParameter] = useState({})
+  const [sortIssues, setSortIssues] = useState(`comments`);
+  const [filterParameter, setFilterParameter] = useState({});
+
   useEffect(() => {
 
     
@@ -46,33 +49,28 @@ function App() {
     if (existingToken) {
       setToken(existingToken);
       console.log("hansol", existingToken);
+      console.log(existingToken);
     }
   }, []);
 
-  useEffect(()=>{
-    getGithubIssuesData()
-  },[])
-
-  useEffect(()=>{
-    getGithubRepo()
-  },[])
+  useEffect(() => {
+    getGithubIssuesData();
+    getGithubRepo();
+  }, []);
 
   useEffect(() => {
-    getGithubIssuesData()
-  }, [currentPage])
-
-
+    getGithubIssuesData();
+  }, [currentPage]);
 
   // get react issues
   const getGithubIssuesData = async () => {
-
-    const url = `https://api.github.com/repos/${repoOwner}/${repoName}/issues?page=${currentPage}&per_page=20&sort=${sortIssues}&order=asc`
-    const response = await fetch(url)
+    const url = `https://api.github.com/repos/${repoOwner}/${repoName}/issues?page=${currentPage}&per_page=20&sort=${sortIssues}&order=asc&state=all`;
+    const response = await fetch(url);
 
     // get header link
-    const link = await response.headers.get('link')
+    const link = await response.headers.get("link");
 
-    const githubIssuesData = await response.json()
+    const githubIssuesData = await response.json();
     setGithubIssues(githubIssuesData);
 
     console.log(githubIssuesData)
@@ -82,35 +80,33 @@ function App() {
 
   // get react repo to find total issues
   const getGithubRepo = async () => {
-    const url = `https://api.github.com/repos/${repoOwner}/${repoName}`
-    const response = await fetch(url)
+    const url = `https://api.github.com/repos/${repoOwner}/${repoName}`;
+    const response = await fetch(url);
     const repoData = await response.json();
-    setRepoInfo(repoData)
-  }
-
+    setRepoInfo(repoData);
+  };
+  console.log(repoInfo, githubIssues);
   return (
     <div className="App">
       {/* <h1>Hello World!</h1> */}
-        <NavBar 
-          setRepoOwner = {setRepoOwner}
-          setRepoName = {setRepoName}        
-          getGithubIssuesData = {getGithubIssuesData}
-          getGithubRepo = {getGithubRepo}
-        />
+      <NavBar
+        setRepoOwner={setRepoOwner}
+        setRepoName={setRepoName}
+        getGithubIssuesData={getGithubIssuesData}
+        getGithubRepo={getGithubRepo}
+      />
       <section className="section">
-        <Body 
-          githubIssues = {githubIssues}
-          repoInfo = {repoInfo}
-          repoName = {repoName}
+        <Body
+          githubIssues={githubIssues}
+          repoInfo={repoInfo}
           repoOwner={repoOwner}
-        
+          repoName={repoName}
         />
         {/* <Modal /> */}
-        <Paginations 
-          repoInfo = {repoInfo}
-          currentPage = {currentPage}
-          setCurrentPage = {setCurrentPage}
-          
+        <Paginations
+          repoInfo={repoInfo}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
         />
         <Footer />
       </section>
