@@ -24,8 +24,6 @@ export default function Body(props) {
     const response = await fetch(url);
     const githubComments = await response.json();
     setGithubComments(githubComments);
-
-    console.log(githubComments);
   };
 
   const handleClose = () => {
@@ -65,7 +63,6 @@ export default function Body(props) {
     const response = await fetch(url);
     const labelList = await response.json();
     setLabelList(labelList);
-    console.log(labelList);
   };
 
   const renderIssueList = () => {

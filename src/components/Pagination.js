@@ -11,7 +11,7 @@ export default function Paginations(props) {
 
   return (
     <div>
-      <Pagination>
+      <Pagination className="justify-content-md-center">
         <Pagination.First
           disabled={props.currentPage === 1}
           onClick={() => props.setCurrentPage(1)}
@@ -23,7 +23,7 @@ export default function Paginations(props) {
 
         {pages &&
           pages.map(el => {
-            if (el >= props.currentPage - 1 && el <= props.currentPage + 1)
+            if (el >= props.currentPage - 2 && el <= props.currentPage + 2)
               return (
                 <Pagination.Item
                   active={el === props.currentPage}
