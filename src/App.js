@@ -3,17 +3,21 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 
 import NavBar from "./components/NavBar";
-import Pagination from "./components/Pagination";
+import Paginations from "./components/Pagination";
 import Body from "./components/Body";
-import Modal from "./components/Modal";
+import MyModal from "./components/Modal";
 import Footer from "./components/Footer";
 
 function App() {
   const [token, setToken] = useState(null);
-  const [githubIssues, setGithubIssues] = useState([])
+  const [repoOwner, setRepoOwner] = useState(`facebook`)
+  const [repoName, setRepoName] = useState(`react`)
+  const [repoInfo, setRepoInfo] = useState({})
+  const [githubIssues, setGithubIssues] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [modalOpen, setModalOpen] = useState(false);
-  
+  const [sortIssues, setSortIssues] = useState(`comments`)
+  const [filterParameter, setFilterParameter] = useState({})
   useEffect(() => {
     const clientId = `05449736a72133433d33`;
     const secretKey = `d0115c0e09c202d8e50ff6260e374294c187ab5a`
@@ -46,22 +50,68 @@ function App() {
     getGithubIssuesData()
   },[])
 
+  useEffect(()=>{
+    getGithubRepo()
+  },[])
+
+  useEffect(() => {
+    getGithubIssuesData()
+  }, [currentPage])
+
+  // useEffect(()=>{
+  //   getGithubRepo()
+  // },[]
+
+
+
+  // get react issues
   const getGithubIssuesData = async () => {
-    const url = `https://api.github.com/repos/facebook/react/issues?page=${currentPage}?per_page=20`
+
+    const url = `https://api.github.com/repos/${repoOwner}/${repoName}/issues?page=${currentPage}&per_page=20&sort=${sortIssues}&order=asc`
     const response = await fetch(url)
+
+    // get header link
+    const link = await response.headers.get('link')
+
     const githubIssuesData = await response.json()
     setGithubIssues(githubIssuesData);
-    console.log("github issues data", githubIssuesData);
   }
 
 
+  // get react repo to find total issues
+  const getGithubRepo = async () => {
+    const url = `https://api.github.com/repos/${repoOwner}/${repoName}`
+    const response = await fetch(url)
+    const repoData = await response.json();
+    setRepoInfo(repoData)
+  }
+
   return (
     <div className="App">
+<<<<<<< HEAD
         <NavBar />
+=======
+      {/* <h1>Hello World!</h1> */}
+        <NavBar 
+          setRepoOwner = {setRepoOwner}
+          setRepoName = {setRepoName}        
+          getGithubIssuesData = {getGithubIssuesData}
+          getGithubRepo = {getGithubRepo}
+        />
+>>>>>>> 13670daa26a0680f6603825b195d1aac96a2c505
       <section className="section">
-        <Pagination />
-        <Body />
-        <Modal />
+        <Body 
+          githubIssues = {githubIssues}
+          repoInfo = {repoInfo}
+        
+        />
+        {/* <Modal /> */}
+        <Paginations 
+          repoInfo = {repoInfo}
+          currentPage = {currentPage}
+          setCurrentPage = {setCurrentPage}
+          
+        />
         <Footer />
       </section>
     </div>
