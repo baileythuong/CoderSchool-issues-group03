@@ -15,14 +15,31 @@ const access_token = `82a9fe65aa85b411fb5acaeb3a81291094c9a2c1`;
 export default function Body(props) {
   const [modalShow, setModalShow] = useState(false);
   const [issue, setIssue] = useState([]);
+  const [githubComments, setGithubComments] = useState([]);
   const [labelName, setLabelName] = useState("");
   const [labelList, setLabelList] = useState([]);
 
-  const handleClose = () => setModalShow(false);
+
+
+  const getGithubComments = async (issue) => {
+    console.log('issue num', issue.number)
+    const url = `https://api.github.com/repos/${props.repoOwner}/${props.repoName}/issues/${issue.number}/comments`
+    const response = await fetch(url)
+    const githubComments = await response.json()
+    setGithubComments(githubComments);
+
+    console.log(githubComments)
+  }
+
+
+  const handleClose = () => {
+        setModalShow(false);
+  }
 
   const handleShow = issue => {
     setIssue(issue);
     setModalShow(true);
+    getGithubComments(issue);
   };
 
   const renderStateIcon = state => {
@@ -204,8 +221,9 @@ export default function Body(props) {
         </Card>
         <MyModal
           show={modalShow}
-          onClick={() => handleClose(false)}
+          onClick={handleClose}
           issue={issue}
+          comments={githubComments}
         />
       </div>
     </>
