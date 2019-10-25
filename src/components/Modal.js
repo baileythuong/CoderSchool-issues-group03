@@ -1,23 +1,56 @@
 import React from "react";
-import { Modal, Button } from "react-bootstrap";
+import { Modal, Button, Badge } from "react-bootstrap";
+const ReactMarkdown = require('react-markdown')
+
 
 export default function MyModal(props) {
-  // console.log(props);
+
+  console.log('sadfasf',props.comments)
+  
   return (
     <>
-      <Modal show={props.show} onClick={props.handleClose}>
+      <Modal 
+      show={props.show} 
+      onHide={props.onClick}
+      size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+      >
         <Modal.Header closeButton>
-          <Modal.Title>{props.issue.title}</Modal.Title>
+          <Modal.Title id="contained-modal-title-vcenter">{props.issue.title}
+          <h3><Badge variant="success">{props.issue.state}</Badge></h3>
+          </Modal.Title>
         </Modal.Header>
-        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={props.onClick}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={props.onClick}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
+        <Modal.Body>
+          <samp>
+          <ReactMarkdown
+          source={props.issue.body}
+          escapeHtml={false}
+          readOnly
+        />
+        </samp>
+        </Modal.Body>
+        {props.comments.map((comment) => {
+          return (
+            <div>
+          <Modal.Body className="commentsarea">
+          {comment.user.login}
+
+          <ReactMarkdown
+          source={comment.body}
+          escapeHtml={false}
+          readOnly />
+                  </Modal.Body>
+
+          </div>
+          )
+        })}
+        
+        
+          
+
+         
+
       </Modal>
     </>
   );
