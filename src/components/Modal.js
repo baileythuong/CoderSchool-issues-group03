@@ -5,11 +5,11 @@ export default function MyModal(props) {
   // console.log(props);
   return (
     <>
-      <Modal show={props.show} onClick={props.onClick}>
+      <Modal show={props.show} onClick={props.handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>{props.issue.title}</Modal.Title>
+          <Modal.Title>{props.issue && props.issue.title}</Modal.Title>
         </Modal.Header>
-        <Modal.Body>blah</Modal.Body>
+        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={props.onClick}>
             Close
