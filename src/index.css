@@ -12,11 +12,12 @@ code {
     monospace;
 }
 
-img {
+img .body-image {
   width: 100%;
   height: auto;
 }
 
-.commentsarea {
- background-color : rgb(221, 221, 221); 
+
+pre {
+  background-color: rgb(235, 235, 235);
 }
