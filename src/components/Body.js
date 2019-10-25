@@ -112,7 +112,7 @@ export default function Body(props) {
               </Nav>
             </div>
           </Card.Header>
-          {props.githubIssues.map(issue => {
+          {props.githubIssues && props.githubIssues.map(issue => {
             return (
               <ListGroup variant="flush">
                 <ListGroup.Item action>

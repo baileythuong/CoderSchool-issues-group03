@@ -5,6 +5,7 @@ import "./App.css";
 import NavBar from "./components/NavBar";
 import Paginations from "./components/Pagination";
 import Body from "./components/Body";
+import MyModal from "./components/Modal";
 import Footer from "./components/Footer";
 
 function App() {
@@ -14,10 +15,12 @@ function App() {
   const [repoInfo, setRepoInfo] = useState({})
   const [githubIssues, setGithubIssues] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-    const [sortIssues, setSortIssues] = useState(`comments`)
+  const [modalOpen, setModalOpen] = useState(false);
+  const [sortIssues, setSortIssues] = useState(`comments`)
   
   console.log("repoOwner", repoOwner)
   console.log("repoName", repoName)
+  console.log("issue", githubIssues)
 
   useEffect(() => {
     const clientId = `05449736a72133433d33`;
@@ -36,7 +39,7 @@ function App() {
     }
 
     if (accessToken) {
-      // console.log(New accessToken: ${accessToken});
+      // console.log(`New accessToken: ${accessToken}`);
 
       sessionStorage.setItem("token", accessToken);
       setToken(accessToken);
@@ -55,10 +58,20 @@ function App() {
     getGithubRepo()
   },[])
 
+  useEffect(() => {
+    getGithubIssuesData()
+  }, [currentPage])
+
+  // useEffect(()=>{
+  //   getGithubRepo()
+  // },[]
+
+
+
   // get react issues
   const getGithubIssuesData = async () => {
 
-    const url = `https://api.github.com/repos/${repoOwner}/${repoName}/issues?page=${currentPage}?per_page=20&sort=${sortIssues}&order=asc`
+    const url = `https://api.github.com/repos/${repoOwner}/${repoName}/issues?page=${currentPage}&per_page=20&sort=${sortIssues}&order=asc`
     const response = await fetch(url)
 
     // get header link
@@ -86,14 +99,18 @@ function App() {
         
         />
       <section className="section">
+        <Body 
+          githubIssues = {githubIssues}
+        
+        />
+        {/* <Modal /> */}
         <Paginations 
           repoInfo = {repoInfo}
           currentPage = {currentPage}
           setCurrentPage = {setCurrentPage}
-          getGithubIssuesData = {()=>getGithubIssuesData()}
+          getGithubIssuesData = {getGithubIssuesData}
           
         />
-        <Body githubIssues={githubIssues} />
         <Footer />
       </section>
     </div>
