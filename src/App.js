@@ -5,16 +5,14 @@ import "./App.css";
 import NavBar from "./components/NavBar";
 import Paginations from "./components/Pagination";
 import Body from "./components/Body";
-import MyModal from "./components/Modal";
-import Footer from "./components/Footer"
+import Footer from "./components/Footer";
 
 const access_token = `82a9fe65aa85b411fb5acaeb3a81291094c9a2c1`;
-
 
 // import data from './components/data'
 // console.log('fakedata', data)
 
-const accessToken=`3380134d34860f46dc119d2d720ee91a53757b63`
+const accessToken = `3380134d34860f46dc119d2d720ee91a53757b63`;
 
 function App() {
   const [token, setToken] = useState(null);
@@ -28,17 +26,15 @@ function App() {
   const [filterParameter, setFilterParameter] = useState({});
 
   useEffect(() => {
-
-    
     const clientId = `05449736a72133433d33`;
-    const secretKey = `3643fcfdf9c6ea7a80f04bef6cef10ed44dd491b`
+    const secretKey = `3643fcfdf9c6ea7a80f04bef6cef10ed44dd491b`;
 
     const existingToken = sessionStorage.getItem("token");
     const accessToken =
       window.location.search.split("=")[0] === "?access_token"
         ? window.location.search.split("=")[1]
         : null;
-  // console.log('object')
+    // console.log('object')
     if (!accessToken && !existingToken) {
       window.location.replace(
         `https://github.com/login/oauth/authorize?scope=user:email,repo&client_id=${clientId}&client_secret=${secretKey}`
@@ -46,7 +42,7 @@ function App() {
     }
 
     if (accessToken) {
-      console.log(`New accessToken: ${accessToken}`);
+      // console.log(`New accessToken: ${accessToken}`);
 
       sessionStorage.setItem("token", accessToken);
       setToken(accessToken);
@@ -54,10 +50,9 @@ function App() {
 
     if (existingToken) {
       setToken(existingToken);
-      console.log("hansol", existingToken);
-      console.log(existingToken);
+      // console.log("hansol", existingToken);
+      // console.log(existingToken);
     }
-
   }, []);
 
   useEffect(() => {
@@ -65,25 +60,27 @@ function App() {
     getGithubRepo();
   }, []);
 
-  useEffect(() => {
-    getGithubIssuesData();
-  }, [currentPage]);
+  // useEffect(() => {
+  //   getGithubIssuesData();
+  // }, [currentPage]);
 
   // get react issues
   const getGithubIssuesData = async () => {
     const url = `https://api.github.com/repos/${repoOwner}/${repoName}/issues?page=${currentPage}&per_page=20&sort=${sortIssues}&order=asc&state=all`;
-    const response = await fetch(url);
 
-    // get header link
-    const link = await response.headers.get("link");
+    try {
+      const response = await fetch(url);
 
-    const githubIssuesData = await response.json();
-    setGithubIssues(githubIssuesData);
+      // get header link
+      const link = await response.headers.get("link");
 
-    console.log(githubIssuesData)
-  }
-
-  
+      const githubIssuesData = await response.json();
+      setGithubIssues(githubIssuesData);
+      console.log("no error", githubIssues);
+    } catch (error) {
+      console.log("Limit probably Loi", githubIssues);
+    }
+  };
 
   // get react repo to find total issues
   const getGithubRepo = async () => {
