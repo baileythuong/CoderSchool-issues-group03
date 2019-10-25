@@ -1,5 +1,5 @@
 # CoderSchool FTW - Github Issues
-_Group 03: Ricardo, Hansol, Artine, Thương, Phong_
+#### Group 03: Ricardo, Hansol, Artine, Thương, Phong
 Live demo [here](#).
 
 Our team have built a Github user-friendly API. It's well designed and familiarizing ourselves with it is a good way to get started on one day building out own APIs.
