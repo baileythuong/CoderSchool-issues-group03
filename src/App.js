@@ -24,9 +24,16 @@ function App() {
   const [githubIssues, setGithubIssues] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [modalOpen, setModalOpen] = useState(false);
+<<<<<<< HEAD
+  const [sortIssues, setSortIssues] = useState(`comments`)
+  const [filterParameter, setFilterParameter] = useState({})
+
+console.log(githubIssues)
+=======
   const [sortIssues, setSortIssues] = useState(`comments`);
   const [filterParameter, setFilterParameter] = useState({});
 
+>>>>>>> 79191cccd9132df6ca46a93858036b8d74ef96e0
   useEffect(() => {
 
     
@@ -54,8 +61,13 @@ function App() {
 
     if (existingToken) {
       setToken(existingToken);
+<<<<<<< HEAD
+      console.log(existingToken);
+      
+=======
       console.log("hansol", existingToken);
       console.log(existingToken);
+>>>>>>> 79191cccd9132df6ca46a93858036b8d74ef96e0
     }
 
   }, []);
