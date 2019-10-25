@@ -12,6 +12,8 @@ Our team have built a Github user-friendly API. It's well designed and familiari
 - [x] Owner Avatar
 - [x] How long ago the issue was created in a human-friendly format (e.g. 2 days ago)
 - [x] Body of the Issue
-- [x] Label - note the color as returned by the API.
+- [x] Label - note the `color` as returned by the API.
 - [x] State of Issue (Open/Closed).
 - [x] The user should be able to see multiple pages of results, by clicking a pagination control.
+- [x] The user should be able to see the body of the issue rendered in markdown.
+- [x] The user can see more details (including comments!) in a modal that's opened by clicking on the title of the issue.
