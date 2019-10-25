@@ -8,8 +8,15 @@ import Body from "./components/Body";
 import MyModal from "./components/Modal";
 import Footer from "./components/Footer";
 
+
+// import data from './components/data'
+// console.log('fakedata', data)
+
+const accessToken=`3380134d34860f46dc119d2d720ee91a53757b63`
+
 function App() {
   const [token, setToken] = useState(null);
+  console.log(token)
   const [repoOwner, setRepoOwner] = useState(`facebook`)
   const [repoName, setRepoName] = useState(`react`)
   const [repoInfo, setRepoInfo] = useState({})
@@ -18,9 +25,10 @@ function App() {
   const [modalOpen, setModalOpen] = useState(false);
   const [sortIssues, setSortIssues] = useState(`comments`)
   const [filterParameter, setFilterParameter] = useState({})
+
   useEffect(() => {
     const clientId = `05449736a72133433d33`;
-    const secretKey = `d0115c0e09c202d8e50ff6260e374294c187ab5a`
+    const secretKey = `3643fcfdf9c6ea7a80f04bef6cef10ed44dd491b`
 
     const existingToken = sessionStorage.getItem("token");
     const accessToken =
@@ -35,7 +43,7 @@ function App() {
     }
 
     if (accessToken) {
-      // console.log(`New accessToken: ${accessToken}`);
+      console.log(`New accessToken: ${accessToken}`);
 
       sessionStorage.setItem("token", accessToken);
       setToken(accessToken);
@@ -43,7 +51,9 @@ function App() {
 
     if (existingToken) {
       setToken(existingToken);
+      console.log(existingToken)
     }
+
   }, []);
 
   useEffect(()=>{
@@ -67,7 +77,7 @@ function App() {
   // get react issues
   const getGithubIssuesData = async () => {
 
-    const url = `https://api.github.com/repos/${repoOwner}/${repoName}/issues?page=${currentPage}&per_page=20&sort=${sortIssues}&order=asc`
+    const url = `https://api.github.com/repos/${repoOwner}/${repoName}/issues?&page=${currentPage}&per_page=20&sort=${sortIssues}&order=asc&access_token=${accessToken}`
     const response = await fetch(url)
 
     // get header link
