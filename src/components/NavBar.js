@@ -7,7 +7,14 @@ import {
   Button
 } from "react-bootstrap";
 
-export default function NavBar() {
+export default function NavBar(props) {
+  const handleSearchInput = (e) => {
+    if(e.keyCode === 13) return props.getGithubIssuesData
+    let repoOwner = e.target.value.split('/')[0]
+    let repoName = e.target.value.split('/')[1]
+    props.setRepoOwner(repoOwner)
+    props.setRepoName(repoName)
+  }
   return (
     <div>
       <Navbar bg="dark" variant="dark" expand="lg">
@@ -21,8 +28,8 @@ export default function NavBar() {
         />
         </Navbar.Brand>
         <Form inline>
-            <FormControl type="text" placeholder="Search or jump to..." className="justify-content-start mr-2" />
-            <Button variant="outline-light">Search</Button>
+            <FormControl type="text" placeholder="Search or jump to..." className="justify-content-start mr-2" onChange={e=>handleSearchInput(e)}/>
+            <Button variant="outline-light" onClick={()=>props.getGithubIssuesData}>Search</Button>
           </Form>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
