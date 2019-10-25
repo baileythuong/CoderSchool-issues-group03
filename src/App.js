@@ -32,7 +32,7 @@ function App() {
       window.location.search.split("=")[0] === "?access_token"
         ? window.location.search.split("=")[1]
         : null;
-
+  console.log('object')
     if (!accessToken && !existingToken) {
       window.location.replace(
         `https://github.com/login/oauth/authorize?scope=user:email,repo&client_id=${clientId}&client_secret=${secretKey}`
