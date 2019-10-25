@@ -10,6 +10,12 @@ import Footer from "./components/Footer"
 
 const access_token = `82a9fe65aa85b411fb5acaeb3a81291094c9a2c1`;
 
+
+// import data from './components/data'
+// console.log('fakedata', data)
+
+const accessToken=`3380134d34860f46dc119d2d720ee91a53757b63`
+
 function App() {
   const [token, setToken] = useState(null);
   const [repoOwner, setRepoOwner] = useState(`facebook`);
@@ -18,9 +24,16 @@ function App() {
   const [githubIssues, setGithubIssues] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [modalOpen, setModalOpen] = useState(false);
+<<<<<<< HEAD
+  const [sortIssues, setSortIssues] = useState(`comments`)
+  const [filterParameter, setFilterParameter] = useState({})
+
+console.log(githubIssues)
+=======
   const [sortIssues, setSortIssues] = useState(`comments`);
   const [filterParameter, setFilterParameter] = useState({});
 
+>>>>>>> 79191cccd9132df6ca46a93858036b8d74ef96e0
   useEffect(() => {
 
     
@@ -48,9 +61,15 @@ function App() {
 
     if (existingToken) {
       setToken(existingToken);
+<<<<<<< HEAD
+      console.log(existingToken);
+      
+=======
       console.log("hansol", existingToken);
       console.log(existingToken);
+>>>>>>> 79191cccd9132df6ca46a93858036b8d74ef96e0
     }
+
   }, []);
 
   useEffect(() => {
