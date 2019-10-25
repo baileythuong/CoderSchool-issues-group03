@@ -10,6 +10,7 @@ export default function Body(props) {
   const [modalShow, setModalShow] = useState(false);
   const [issue, setIssue] = useState([]);
 
+  console.log(props.githubIssues);
   const handleClose = () => setModalShow(false);
 
   const handleShow = issue => {

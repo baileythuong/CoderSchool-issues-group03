@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 
 import NavBar from "./components/NavBar";
-import Pagination from "./components/Pagination";
+import Paginations from "./components/Pagination";
 import Body from "./components/Body";
 import Modal from "./components/Modal";
 import Footer from "./components/Footer";
@@ -18,9 +18,12 @@ function App() {
   const [modalOpen, setModalOpen] = useState(false);
   const [sortIssues, setSortIssues] = useState(`comments`)
   const [filterParameter, setFilterParameter] = useState({})
+
+  const access_token = `8d47645347edacba12acdac439b95f9759c7960a`
+  
   useEffect(() => {
     const clientId = `05449736a72133433d33`;
-    const secretKey = `d0115c0e09c202d8e50ff6260e374294c187ab5a`
+    const secretKey = `3643fcfdf9c6ea7a80f04bef6cef10ed44dd491b`
 
     const existingToken = sessionStorage.getItem("token");
     const accessToken =
@@ -35,7 +38,7 @@ function App() {
     }
 
     if (accessToken) {
-      // console.log(`New accessToken: ${accessToken}`);
+      console.log(`New accessToken: ${accessToken}`);
 
       sessionStorage.setItem("token", accessToken);
       setToken(accessToken);
@@ -43,6 +46,8 @@ function App() {
 
     if (existingToken) {
       setToken(existingToken);
+      console.log(existingToken);
+      
     }
   }, []);
 
@@ -67,7 +72,7 @@ function App() {
   // get react issues
   const getGithubIssuesData = async () => {
 
-    const url = `https://api.github.com/repos/${repoOwner}/${repoName}/issues?page=${currentPage}&per_page=20&sort=${sortIssues}&order=asc`
+    const url = `https://api.github.com/repos/${repoOwner}/${repoName}/issues?page=${currentPage}&per_page=20&sort=${sortIssues}&order=asc&access_token=${access_token}`
     const response = await fetch(url)
 
     // get header link
@@ -102,13 +107,13 @@ function App() {
         repoInfo = {repoInfo}
         />
 
-        <Pagination 
+        <Paginations
           repoInfo = {repoInfo}
           currentPage = {currentPage}
           setCurrentPage = {setCurrentPage}
         
         />
-        
+
         <Footer />
       </section>
     </div>

@@ -3,7 +3,7 @@ const request = require('request');
 require('dotenv').config();
 
 const clientId = `05449736a72133433d33`
-const secretKey = `d0115c0e09c202d8e50ff6260e374294c187ab5a`
+const secretKey = `3643fcfdf9c6ea7a80f04bef6cef10ed44dd491b`
 
 console.log('Started server on port 5000');
 console.log('ID:', clientId);
