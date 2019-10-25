@@ -6,14 +6,9 @@ import NavBar from "./components/NavBar";
 import Paginations from "./components/Pagination";
 import Body from "./components/Body";
 import MyModal from "./components/Modal";
-import Footer from "./components/Footer";
+import Footer from "./components/Footer"
 
 function App() {
-
-  
-  const access_token = `1a1b29659b0cd23e12d6faed909d280173b4d301`
-
-  
   const [token, setToken] = useState(null);
   const [repoOwner, setRepoOwner] = useState(`facebook`)
   const [repoName, setRepoName] = useState(`react`)
@@ -24,15 +19,17 @@ function App() {
   const [sortIssues, setSortIssues] = useState(`comments`)
   const [filterParameter, setFilterParameter] = useState({})
   useEffect(() => {
+
+    
     const clientId = `05449736a72133433d33`;
-    const secretKey = `d0115c0e09c202d8e50ff6260e374294c187ab5a`
+    const secretKey = `3643fcfdf9c6ea7a80f04bef6cef10ed44dd491b`
 
     const existingToken = sessionStorage.getItem("token");
     const accessToken =
       window.location.search.split("=")[0] === "?access_token"
         ? window.location.search.split("=")[1]
         : null;
-  console.log('object')
+  // console.log('object')
     if (!accessToken && !existingToken) {
       window.location.replace(
         `https://github.com/login/oauth/authorize?scope=user:email,repo&client_id=${clientId}&client_secret=${secretKey}`
@@ -40,7 +37,7 @@ function App() {
     }
 
     if (accessToken) {
-      // console.log(`New accessToken: ${accessToken}`);
+      console.log(`New accessToken: ${accessToken}`);
 
       sessionStorage.setItem("token", accessToken);
       setToken(accessToken);
@@ -48,6 +45,7 @@ function App() {
 
     if (existingToken) {
       setToken(existingToken);
+      console.log("hansol", existingToken);
     }
   }, []);
 
@@ -63,10 +61,6 @@ function App() {
     getGithubIssuesData()
   }, [currentPage])
 
-  // useEffect(()=>{
-  //   getGithubRepo()
-  // },[]
-
 
 
   // get react issues
@@ -80,8 +74,11 @@ function App() {
 
     const githubIssuesData = await response.json()
     setGithubIssues(githubIssuesData);
+
+    console.log(githubIssuesData)
   }
 
+  
 
   // get react repo to find total issues
   const getGithubRepo = async () => {
@@ -104,6 +101,8 @@ function App() {
         <Body 
           githubIssues = {githubIssues}
           repoInfo = {repoInfo}
+          repoName = {repoName}
+          repoOwner={repoOwner}
         
         />
         {/* <Modal /> */}

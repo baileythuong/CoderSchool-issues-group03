@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Moment from "react-moment";
 import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
@@ -9,13 +9,31 @@ import MyModal from "./Modal";
 export default function Body(props) {
   const [modalShow, setModalShow] = useState(false);
   const [issue, setIssue] = useState([]);
+  const [githubComments, setGithubComments] = useState([]);
 
-  const handleClose = () => setModalShow(false);
+
+
+  const getGithubComments = async (issue) => {
+    console.log('issue num', issue.number)
+    const url = `https://api.github.com/repos/${props.repoOwner}/${props.repoName}/issues/${issue.number}/comments`
+    const response = await fetch(url)
+    const githubComments = await response.json()
+    setGithubComments(githubComments);
+
+    console.log(githubComments)
+  }
+
+
+  const handleClose = () => {
+        setModalShow(false);
+  }
 
   const handleShow = issue => {
     setIssue(issue);
     setModalShow(true);
+    getGithubComments(issue);
   };
+
 
   return (
     <>
@@ -141,8 +159,9 @@ export default function Body(props) {
         </Card>
         <MyModal
           show={modalShow}
-          onClick={() => handleClose(false)}
+          onClick={handleClose}
           issue={issue}
+          comments={githubComments}
         />
       </div>
     </>

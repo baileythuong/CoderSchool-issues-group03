@@ -6,7 +6,7 @@ const clientId = `05449736a72133433d33`
 const secretKey = `3643fcfdf9c6ea7a80f04bef6cef10ed44dd491b`
 
 console.log('Started server on port 5000');
-console.log('ID:', clientId);
+console.log('hi  isisisis ID:', clientId);
 console.log('secret key:', secretKey);
 
 
@@ -21,6 +21,7 @@ http.createServer((req, res) => {
         code: code
       }
     }, (err, r, body) => {
+      console.log('Hi I got a request(server)')
       res.writeHead(301, {
         'Location': 'http://localhost:3000?' + body
       });
