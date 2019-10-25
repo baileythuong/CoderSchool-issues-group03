@@ -1,10 +1,10 @@
 # CoderSchool FTW - Github Issues
-## Group 03: Ricardo, Hansol, Artine, Thương, Phong
+__Group 03: Ricardo, Hansol, Artine, Thương, Phong__
 Live demo [here](#).
 
 Our team have built a Github user-friendly API. It's well designed and familiarizing ourselves with it is a good way to get started on one day building out own APIs.
 
-## Required Features
+## Features
 - [x] The user can enter a repository in a search bar, click "search", and see the associated issues. The repository should be of the format `owner/repo-name`, e.g. `facebook/react`.
 - [x] Issue Title
 - [x] Number of the issue
