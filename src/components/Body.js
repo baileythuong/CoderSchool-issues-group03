@@ -16,24 +16,19 @@ export default function Body(props) {
   const [modalShow, setModalShow] = useState(false);
   const [issue, setIssue] = useState([]);
   const [githubComments, setGithubComments] = useState([]);
-  const [labelName, setLabelName] = useState("");
   const [labelList, setLabelList] = useState([]);
 
-
-
-  const getGithubComments = async (issue) => {
-    console.log('issue num', issue.number)
-    const url = `https://api.github.com/repos/${props.repoOwner}/${props.repoName}/issues/${issue.number}/comments`
-    const response = await fetch(url)
-    const githubComments = await response.json()
+  const getGithubComments = async issue => {
+    console.log("issue num", issue.number);
+    const url = `https://api.github.com/repos/${props.repoOwner}/${props.repoName}/issues/${issue.number}/comments`;
+    const response = await fetch(url);
+    const githubComments = await response.json();
     setGithubComments(githubComments);
+  };
 
-    console.log(githubComments)
-  }
-
-
-  console.log(props.githubIssues);
-  const handleClose = () => setModalShow(false);
+  const handleClose = () => {
+    setModalShow(false);
+  };
 
   const handleShow = issue => {
     setIssue(issue);
@@ -68,7 +63,52 @@ export default function Body(props) {
     const response = await fetch(url);
     const labelList = await response.json();
     setLabelList(labelList);
-    console.log(labelList);
+  };
+
+  const renderIssueList = () => {
+    if (props.githubIssues == null) {
+      return (
+        <div className="container d-flex flex-column justify-content-center align-items-center p-5">
+          <h2>undefined.</h2>
+        </div>
+      );
+    } else if (props.githubIssues.length === 0) {
+      return (
+        <div className="container d-flex flex-column justify-content-center align-items-center p-5">
+          <h2>No results matched your search.</h2>
+        </div>
+      );
+    } else {
+      return props.githubIssues.map(issue => {
+        return (
+          <ListGroup variant="flush">
+            <ListGroup.Item action className="d-flex flex-row align-items-top">
+              <span>{renderStateIcon(issue.state)}</span>
+              <div>
+                <h6>
+                  <strong>
+                    <a
+                      className="text-decoration-none text-dark"
+                      href="#Link"
+                      onClick={() => handleShow(issue)}
+                    >
+                      {issue.title}
+                    </a>
+                  </strong>
+                </h6>
+                <h6 className="small">
+                  #{issue.id} opened <Moment fromNow>{issue.created_at}</Moment>{" "}
+                  by{" "}
+                  <a href={`https://github.com/${issue.user.login}`}>
+                    {issue.user.login}
+                  </a>
+                </h6>
+              </div>
+            </ListGroup.Item>
+          </ListGroup>
+        );
+      });
+    }
   };
 
   useEffect(() => {
@@ -184,7 +224,12 @@ export default function Body(props) {
               </Nav>
             </div>
           </Card.Header>
-          {props.githubIssues &&
+          <span>{renderIssueList()}</span>
+          {/* {props.githubIssues.length === 0 ? (
+            <div className="container d-flex flex-column justify-content-center align-items-center p-5">
+              <h2>No results matched your search.</h2>
+            </div>
+          ) : (
             props.githubIssues.map(issue => {
               return (
                 <ListGroup variant="flush">
@@ -216,7 +261,8 @@ export default function Body(props) {
                   </ListGroup.Item>
                 </ListGroup>
               );
-            })}
+            })
+          )} */}
         </Card>
         <MyModal
           show={modalShow}

@@ -20,21 +20,17 @@ function App() {
   const [modalOpen, setModalOpen] = useState(false);
   const [sortIssues, setSortIssues] = useState(`comments`)
   const [filterParameter, setFilterParameter] = useState({})
-
-  const access_token = `8d47645347edacba12acdac439b95f9759c7960a`
   
   useEffect(() => {
-
-    
     const clientId = `05449736a72133433d33`;
-    const secretKey = `3643fcfdf9c6ea7a80f04bef6cef10ed44dd491b`
+    const secretKey = `3643fcfdf9c6ea7a80f04bef6cef10ed44dd491b`;
 
     const existingToken = sessionStorage.getItem("token");
     const accessToken =
       window.location.search.split("=")[0] === "?access_token"
         ? window.location.search.split("=")[1]
         : null;
-  // console.log('object')
+    // console.log('object')
     if (!accessToken && !existingToken) {
       window.location.replace(
         `https://github.com/login/oauth/authorize?scope=user:email,repo&client_id=${clientId}&client_secret=${secretKey}`
@@ -42,7 +38,7 @@ function App() {
     }
 
     if (accessToken) {
-      console.log(`New accessToken: ${accessToken}`);
+      // console.log(`New accessToken: ${accessToken}`);
 
       sessionStorage.setItem("token", accessToken);
       setToken(accessToken);
@@ -50,14 +46,13 @@ function App() {
 
     if (existingToken) {
       setToken(existingToken);
+      // console.log("hansol", existingToken);
       console.log(existingToken);
-      
     }
-
   }, []);
 
   useEffect(() => {
-    getGithubIssuesData();
+    // getGithubIssuesData();
     getGithubRepo();
   }, []);
 
@@ -74,13 +69,19 @@ function App() {
     // get header link
     const link = await response.headers.get("link");
 
-    const githubIssuesData = await response.json();
-    setGithubIssues(githubIssuesData);
+    try {
+      const response = await fetch(url);
 
-    console.log(githubIssuesData)
-  }
+      // get header link
+      const link = await response.headers.get("link");
 
-  
+      const githubIssuesData = await response.json();
+      setGithubIssues(githubIssuesData);
+      console.log("no error", githubIssues);
+    } catch (error) {
+      console.log("Limit probably Loi", githubIssues);
+    }
+  };
 
   // get react repo to find total issues
   const getGithubRepo = async () => {
