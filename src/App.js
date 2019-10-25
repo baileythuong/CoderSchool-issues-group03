@@ -34,7 +34,6 @@ function App() {
       window.location.search.split("=")[0] === "?access_token"
         ? window.location.search.split("=")[1]
         : null;
-    // console.log('object')
     if (!accessToken && !existingToken) {
       window.location.replace(
         `https://github.com/login/oauth/authorize?scope=user:email,repo&client_id=${clientId}&client_secret=${secretKey}`
@@ -56,30 +55,23 @@ function App() {
   }, []);
 
   useEffect(() => {
-    getGithubIssuesData();
     getGithubRepo();
   }, []);
 
-  // useEffect(() => {
-  //   getGithubIssuesData();
-  // }, [currentPage]);
+  useEffect(() => {
+    getGithubIssuesData();
+  }, [currentPage]);
 
   // get react issues
   const getGithubIssuesData = async () => {
-    const url = `https://api.github.com/repos/${repoOwner}/${repoName}/issues?page=${currentPage}&per_page=20&sort=${sortIssues}&order=asc&state=all`;
+    const url = `https://api.github.com/repos/${repoOwner}/${repoName}/issues?page=${currentPage}&per_page=20&sort=${sortIssues}&order=asc`;
+    const response = await fetch(url);
 
-    try {
-      const response = await fetch(url);
+    // get header link
+    const link = await response.headers.get("link");
 
-      // get header link
-      const link = await response.headers.get("link");
-
-      const githubIssuesData = await response.json();
-      setGithubIssues(githubIssuesData);
-      console.log("no error", githubIssues);
-    } catch (error) {
-      console.log("Limit probably Loi", githubIssues);
-    }
+    const githubIssuesData = await response.json();
+    setGithubIssues(githubIssuesData);
   };
 
   // get react repo to find total issues
@@ -89,7 +81,7 @@ function App() {
     const repoData = await response.json();
     setRepoInfo(repoData);
   };
-  console.log(repoInfo, githubIssues);
+
   return (
     <div className="App">
       {/* <h1>Hello World!</h1> */}
