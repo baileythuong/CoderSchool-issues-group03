@@ -18,6 +18,8 @@ function App() {
   const [modalOpen, setModalOpen] = useState(false);
   const [sortIssues, setSortIssues] = useState(`comments`)
   const [filterParameter, setFilterParameter] = useState({})
+
+console.log(githubIssues)
   useEffect(() => {
     const clientId = `05449736a72133433d33`;
     const secretKey = `d0115c0e09c202d8e50ff6260e374294c187ab5a`
@@ -43,6 +45,8 @@ function App() {
 
     if (existingToken) {
       setToken(existingToken);
+      console.log(existingToken);
+      
     }
   }, []);
 
