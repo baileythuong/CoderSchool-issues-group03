@@ -17,11 +17,7 @@ function App() {
   const [currentPage, setCurrentPage] = useState(1);
   const [modalOpen, setModalOpen] = useState(false);
   const [sortIssues, setSortIssues] = useState(`comments`)
-  
-  console.log("repoOwner", repoOwner)
-  console.log("repoName", repoName)
-  console.log("issue", githubIssues)
-
+  const [filterParameter, setFilterParameter] = useState({})
   useEffect(() => {
     const clientId = `05449736a72133433d33`;
     const secretKey = `d0115c0e09c202d8e50ff6260e374294c187ab5a`
@@ -96,11 +92,13 @@ function App() {
         <NavBar 
           setRepoOwner = {setRepoOwner}
           setRepoName = {setRepoName}        
-        
+          getGithubIssuesData = {getGithubIssuesData}
+          getGithubRepo = {getGithubRepo}
         />
       <section className="section">
         <Body 
           githubIssues = {githubIssues}
+          repoInfo = {repoInfo}
         
         />
         {/* <Modal /> */}
@@ -108,7 +106,6 @@ function App() {
           repoInfo = {repoInfo}
           currentPage = {currentPage}
           setCurrentPage = {setCurrentPage}
-          getGithubIssuesData = {getGithubIssuesData}
           
         />
         <Footer />
