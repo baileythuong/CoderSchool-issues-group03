@@ -1,0 +1,17 @@
+.open-warning-icon {
+    color: #6DC36B;
+}
+
+.closed-warning-icon {
+    color: red;
+}
+
+.label-select-menu {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    margin-top: -1px;
+    margin-right: 2px;
+    vertical-align: middle;
+    border-radius: 3px;
+}
