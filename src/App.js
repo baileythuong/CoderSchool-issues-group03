@@ -63,7 +63,7 @@ function App() {
   // get react issues
   const getGithubIssuesData = async () => {
 
-    const url = `https://api.github.com/repos/${repoOwner}/${repoName}/issues?page=${currentPage}&per_page=20&sort=${sortIssues}&order=asc&access_token=${access_token}`
+    const url = `https://api.github.com/repos/${repoOwner}/${repoName}/issues?page=${currentPage}&per_page=20&sort=${sortIssues}&order=asc`
     const response = await fetch(url)
 
     // get header link
