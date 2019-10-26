@@ -10,7 +10,7 @@ import {
 export default function NavBar(props) {
   // console.log(props.getGithubIssuesData)
   const handleSearchInput = (e) => {
-    // if(e.keyCode === 13) return props.getGithubIssuesData(); props.getGithubRepo()
+    if(e.keyCode === 13) return props.getGithubIssuesData(); props.getGithubRepo()
     let repoOwner = e.target.value.split('/')[0]
     let repoName = e.target.value.split('/')[1]
     props.setRepoOwner(repoOwner)

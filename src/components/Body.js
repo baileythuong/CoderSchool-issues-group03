@@ -22,13 +22,13 @@ export default function Body(props) {
 
 
   const getGithubComments = async (issue) => {
-    console.log('issue num', issue.number)
     const url = `https://api.github.com/repos/${props.repoOwner}/${props.repoName}/issues/${issue.number}/comments`
     const response = await fetch(url)
+    const mediaType = await response.headers.get("X-GitHub-Media-Type")
+    console.log(mediaType)
     const githubComments = await response.json()
     setGithubComments(githubComments);
 
-    console.log(githubComments)
   }
 
 
@@ -69,7 +69,6 @@ export default function Body(props) {
     const response = await fetch(url);
     const labelList = await response.json();
     setLabelList(labelList);
-    console.log(labelList);
   };
 
   useEffect(() => {

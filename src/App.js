@@ -41,12 +41,12 @@ function App() {
   // console.log('object')
     if (!accessToken && !existingToken) {
       window.location.replace(
-        `https://github.com/login/oauth/authorize?scope=user:email,repo&client_id=${clientId}&client_secret=${secretKey}`
+        `https://github.com/login/oauth/authorize?scope=user:email,repo&client_id=${clientId}&client_secret=${secretKey}&access_token=${accessToken}`
       );
     }
 
     if (accessToken) {
-      console.log(`New accessToken: ${accessToken}`);
+      // console.log(`New accessToken: ${accessToken}`);
 
       sessionStorage.setItem("token", accessToken);
       setToken(accessToken);
@@ -54,8 +54,8 @@ function App() {
 
     if (existingToken) {
       setToken(existingToken);
-      console.log("hansol", existingToken);
-      console.log(existingToken);
+      // console.log("hansol", existingToken);
+      // console.log(existingToken);
     }
 
   }, []);
