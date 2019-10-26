@@ -9,11 +9,17 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
-img .body-image {
-  width: 100%;
-  height: auto;
+ p , span > img {
+ width: 100% !important;
+}
+
+
+
+p > table {
+  width : 100% !important;
 }
 
 pre {
+  width : 100%;
   background-color: rgb(235, 235, 235);
 }
