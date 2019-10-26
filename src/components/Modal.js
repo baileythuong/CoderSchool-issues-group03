@@ -1,6 +1,10 @@
-import React from "react";
+import React , {useState, useEffect } from "react";
 import Moment from "react-moment";
+import CommentForm from "./CommentForm"
+import CommentList from "./CommentList"
 import { Modal, Media, Badge , Image } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 const ReactMarkdown = require('react-markdown')
 
 
@@ -31,7 +35,7 @@ export default function MyModal(props) {
                       alt="Generic placeholder"
                       rounded
                     />
-              <Media.Body>
+              <Media.Body className="align-self-center">
               <div className="d-flex">
                   <h5>{props.issue.user ? props.issue.user.login : 'Anonymous'}</h5>
                   <h6 className="text-muted ml-5">opened this issue <Moment fromNow>{props.issue.created_at}</Moment></h6>
@@ -53,7 +57,7 @@ export default function MyModal(props) {
         {props.comments.map((comment) => {
           return (
             <div>
-            <Modal.Body className="container body-image">
+            <Modal.Body className="container">
             <ul className="list-unstyled">
               <Media as="li">
                 <Image
@@ -64,7 +68,7 @@ export default function MyModal(props) {
                   alt="Profile Image"
                   rounded
                 />
-                <Media.Body className="container">
+                <Media.Body className="container body-image">
                   <div className="d-flex">
                   <h5>{comment.user.login}</h5>
                   <h6 className="text-muted ml-5">commented <Moment fromNow>{comment.updated_at}</Moment></h6>
@@ -84,8 +88,7 @@ export default function MyModal(props) {
           </div>
           )
         })}
-
-
+      <CommentForm />
       </Modal>
     </>
   );

@@ -21,3 +21,7 @@
     vertical-align: middle;
     border-radius: 3px;
 }
+
+.modal-body {
+    padding: 0.7rem;
+}
