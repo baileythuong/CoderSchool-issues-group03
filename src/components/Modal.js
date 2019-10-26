@@ -5,7 +5,6 @@ import { Modal, Media, Badge , Image } from "react-bootstrap";
 
 const ReactMarkdown = require('react-markdown')
 
-
 export default function MyModal(props) {
 
   
@@ -15,15 +14,14 @@ export default function MyModal(props) {
       show={props.show} 
       onHide={props.onClick}
       size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
+      aria-labelledby="example-modal-sizes-title-lg"
       >
         <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter" className="d-flex"><span>#{props.issue.number} {props.issue.title}&nbsp;</span>
+          <Modal.Title id="example-modal-sizes-title-lg" className="d-flex"><span>#{props.issue.number} {props.issue.title}&nbsp;</span>
           <h3><Badge variant={props.issue.state === 'open'? "success": "danger"}>{props.issue.state}</Badge></h3>
           </Modal.Title>
           </Modal.Header>
-          <Modal.Title id="contained-modal-title-vcenter" className="px-3 py-3">
+          <Modal.Title id="example-modal-sizes-title-lg" className="px-3 py-3">
                 <Media>
                     <Image
                       width={64}
@@ -42,7 +40,7 @@ export default function MyModal(props) {
             </Media>
           </Modal.Title>
 
-        <Modal.Body className="body-image">
+        <Modal.Body className="container body-image">
           <samp>
           <ReactMarkdown
           source={props.issue.body}
@@ -55,7 +53,7 @@ export default function MyModal(props) {
         {props.comments.map((comment) => {
           return (
             <div>
-            <Modal.Body className="container">
+            <Modal.Body className="container body-image">
             <ul className="list-unstyled">
               <Media as="li">
                 <Image
@@ -66,7 +64,7 @@ export default function MyModal(props) {
                   alt="Profile Image"
                   rounded
                 />
-                <Media.Body className="container body-image">
+                <Media.Body className="container">
                   <div className="d-flex">
                   <h5>{comment.user.login}</h5>
                   <h6 className="text-muted ml-5">commented <Moment fromNow>{comment.updated_at}</Moment></h6>
