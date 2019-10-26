@@ -25,3 +25,58 @@
 .modal-body {
     padding: 0.7rem;
 }
+/* add style to add issue */
+.link-to-add {
+    color: white;
+}
+
+.add-issue-btn {
+    display: flex;
+    justify-content: space-between;
+}
+
+.add-issue {
+    margin-top: 1%;
+    margin-bottom: 10%;
+    border: 1px solid #d1d5da;
+    border-radius: 3px;
+    outline: none;
+    padding: 1% 1% 1% 1%;
+}
+.add-issue-title {
+    vertical-align: middle;
+    border: 1px solid #d1d5da;
+    border-radius: 3px;
+    outline: none;
+    box-shadow: inset 0 1px 2px rgba(27,31,35,.075);
+    width : 100%;
+    min-height: 34px;
+    background-color: #fafbfc;
+    margin-bottom: 3%;
+    padding-left: 1%;
+}
+
+.add-issue-write {
+    max-height: 261px;
+    height: 456px;
+    padding: 8px;
+    resize: vertical;
+    background-color: #fafbfc;
+    font-size: 14px;
+    border: 1px solid #d1d5da;
+    border-radius: 3px;
+    outline: none;
+    box-shadow: inset 0 1px 2px rgba(27,31,35,.075);
+    width: 100%;
+}
+
+.write-input-container {
+    margin-bottom: 0%;
+    background-color: #fafbfc;
+}
+
+.submit-issue-btn {
+    display: flex;
+    justify-content: flex-end;
+}
+

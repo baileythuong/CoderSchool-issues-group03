@@ -3,18 +3,10 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 
 import NavBar from "./components/NavBar";
+import Header from "./components/Header"
 import Paginations from "./components/Pagination";
 import Body from "./components/Body";
-import MyModal from "./components/Modal";
-import Footer from "./components/Footer"
-
-const access_token = `82a9fe65aa85b411fb5acaeb3a81291094c9a2c1`;
-
-
-// import data from './components/data'
-// console.log('fakedata', data)
-
-const accessToken=`3380134d34860f46dc119d2d720ee91a53757b63`
+import Footer from "./components/Footer";
 
 function App() {
   const [token, setToken] = useState(null);
@@ -27,18 +19,17 @@ function App() {
   const [sortIssues, setSortIssues] = useState(`comments`);
   const [filterParameter, setFilterParameter] = useState({});
 
-  useEffect(() => {
+  console.log("repo", repoOwner, repoName)
 
-    
+  useEffect(() => {
     const clientId = `05449736a72133433d33`;
-    const secretKey = `3643fcfdf9c6ea7a80f04bef6cef10ed44dd491b`
+    const secretKey = `3643fcfdf9c6ea7a80f04bef6cef10ed44dd491b`;
 
     const existingToken = sessionStorage.getItem("token");
     const accessToken =
       window.location.search.split("=")[0] === "?access_token"
         ? window.location.search.split("=")[1]
         : null;
-  // console.log('object')
     if (!accessToken && !existingToken) {
       window.location.replace(
         `https://github.com/login/oauth/authorize?scope=user:email,repo&client_id=${clientId}&client_secret=${secretKey}`
@@ -46,22 +37,17 @@ function App() {
     }
 
     if (accessToken) {
-      console.log(`New accessToken: ${accessToken}`);
-
+      // console.log(`New accessToken: ${accessToken}`);
       sessionStorage.setItem("token", accessToken);
       setToken(accessToken);
     }
 
     if (existingToken) {
       setToken(existingToken);
-      console.log("hansol", existingToken);
-      console.log(existingToken);
     }
-
   }, []);
 
   useEffect(() => {
-    getGithubIssuesData();
     getGithubRepo();
   }, []);
 
@@ -71,7 +57,7 @@ function App() {
 
   // get react issues
   const getGithubIssuesData = async () => {
-    const url = `https://api.github.com/repos/${repoOwner}/${repoName}/issues?page=${currentPage}&per_page=20&sort=${sortIssues}&order=asc&state=all`;
+    const url = `https://api.github.com/repos/${repoOwner}/${repoName}/issues?state=all&page=${currentPage}&per_page=20&sort=${sortIssues}&order=asc`;
     const response = await fetch(url);
 
     // get header link
@@ -79,11 +65,7 @@ function App() {
 
     const githubIssuesData = await response.json();
     setGithubIssues(githubIssuesData);
-
-    console.log(githubIssuesData)
-  }
-
-  
+  };
 
   // get react repo to find total issues
   const getGithubRepo = async () => {
@@ -92,7 +74,7 @@ function App() {
     const repoData = await response.json();
     setRepoInfo(repoData);
   };
-  console.log(repoInfo, githubIssues);
+
   return (
     <div className="App">
       {/* <h1>Hello World!</h1> */}
@@ -102,6 +84,11 @@ function App() {
         getGithubIssuesData={getGithubIssuesData}
         getGithubRepo={getGithubRepo}
       />
+
+      <Header 
+      repoOwner={repoOwner}
+      repoName={repoName}
+      />
       <section className="section">
         <Body
           githubIssues={githubIssues}
@@ -109,12 +96,13 @@ function App() {
           repoOwner={repoOwner}
           repoName={repoName}
         />
-        {/* <Modal /> */}
+
         <Paginations
           repoInfo={repoInfo}
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
         />
+
         <Footer />
       </section>
     </div>
