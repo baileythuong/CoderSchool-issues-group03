@@ -1,9 +1,7 @@
 import React , {useState, useEffect } from "react";
 import Moment from "react-moment";
 import CommentForm from "./CommentForm"
-import CommentList from "./CommentList"
 import { Modal, Media, Badge , Image } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const ReactMarkdown = require('react-markdown')
 
