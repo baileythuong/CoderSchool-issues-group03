@@ -1,4 +1,4 @@
-import React , {useState, useEffect } from "react";
+import React from "react";
 import Moment from "react-moment";
 import CommentForm from "./CommentForm"
 import { Modal, Media, Badge , Image } from "react-bootstrap";
