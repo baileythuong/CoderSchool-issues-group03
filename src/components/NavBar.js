@@ -4,12 +4,20 @@ import { Navbar, Nav, Form, FormControl, Button } from "react-bootstrap";
 export default function NavBar(props) {
   // console.log(props.getGithubIssuesData)
   const handleSearchInput = e => {
-    // if(e.keyCode === 13) return props.getGithubIssuesData(); props.getGithubRepo()
     let repoOwner = e.target.value.split("/")[0];
     let repoName = e.target.value.split("/")[1];
     props.setRepoOwner(repoOwner);
     props.setRepoName(repoName);
   };
+
+  const handleEnterSearch = e => {
+    // console.log(e.keyCode)
+    if(e.keyCode === 13) {
+      props.getGithubIssuesData();
+      props.getGithubRepo();
+      return
+    }
+  }
   return (
     <div>
       <Navbar bg="dark" variant="dark" expand="lg" className="mb-5">
@@ -27,6 +35,7 @@ export default function NavBar(props) {
             type="text"
             placeholder="Search or jump to..."
             className="justify-content-start mr-2"
+            onKeyDown={e=>handleEnterSearch(e)}
             onChange={e => handleSearchInput(e)}
           />
           <Button

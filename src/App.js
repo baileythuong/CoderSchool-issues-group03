@@ -3,11 +3,10 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 
 import NavBar from "./components/NavBar";
+import Header from "./components/Header"
 import Paginations from "./components/Pagination";
 import Body from "./components/Body";
 import Footer from "./components/Footer";
-
-const accessToken = `3380134d34860f46dc119d2d720ee91a53757b63`;
 
 function App() {
   const [token, setToken] = useState(null);
@@ -19,6 +18,8 @@ function App() {
   const [modalOpen, setModalOpen] = useState(false);
   const [sortIssues, setSortIssues] = useState(`comments`);
   const [filterParameter, setFilterParameter] = useState({});
+
+  console.log("repo", repoOwner, repoName)
 
   useEffect(() => {
     const clientId = `05449736a72133433d33`;
@@ -56,7 +57,7 @@ function App() {
 
   // get react issues
   const getGithubIssuesData = async () => {
-    const url = `https://api.github.com/repos/${repoOwner}/${repoName}/issues?page=${currentPage}&per_page=20&sort=${sortIssues}&order=asc`;
+    const url = `https://api.github.com/repos/${repoOwner}/${repoName}/issues?state=all&page=${currentPage}&per_page=20&sort=${sortIssues}&order=asc`;
     const response = await fetch(url);
 
     // get header link
@@ -82,6 +83,11 @@ function App() {
         setRepoName={setRepoName}
         getGithubIssuesData={getGithubIssuesData}
         getGithubRepo={getGithubRepo}
+      />
+
+      <Header 
+      repoOwner={repoOwner}
+      repoName={repoName}
       />
       <section className="section">
         <Body
