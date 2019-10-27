@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { Tab, Tabs, Form } from "react-bootstrap";
+import { useHistory } from "react-router-dom"
 
 const ReactMarkdown = require("react-markdown");
 
-export default function AddIssue() {
+export default function AddIssue(props) {
   const placeholder = `
       <!--
       Note: if the issue is about documentation or the website, please file it at:
@@ -22,25 +23,30 @@ export default function AddIssue() {
 
   const [issueTitle, setIssueTitle] = useState("");
   const [issueContent, setIssueContent] = useState(placeholder);
+  const history = useHistory()
 
-  console.log("test", issueContent);
+    const handleGoBack = () => {
+        history.goBack();
+    }
 
   const postNewIssue = async () => {
     let data = {
-      title: { issueTitle },
-      body: { issueContent }
+      "title": { issueTitle },
+      "body": { issueContent },
     };
     const url = `https://api.github.com/repos/facebook/react/issues`;
     const response = await fetch(url, {
       method: "POST",
       header: {
-        "Content-Type": "application/vnd.github.symmetra-preview+json"
+        "Accept": "application/vnd.github.symmetra-preview+json",
+        "Content-Type":"application/json",
+        Authorization: `token ${props.token}` 
       },
-      body: data.toString(),
-      json: true
+      body: JSON.stringify(data)
     });
     console.log(response.json());
   };
+
   return (
     <div className="add-issue">
       <input
@@ -66,9 +72,9 @@ export default function AddIssue() {
             </Form>
           </div>
           <span className="submit-issue-btn   ">
-            {/* <button type="button" className="btn btn-outline-danger" onClick={()=>window.location.reload()}>
+            <button type="button" className="btn btn-outline-danger" onClick={()=>handleGoBack()}>
               Close
-            </button> */}
+            </button>
             <button
               type="button"
               className="btn btn-success font-weight-bold"

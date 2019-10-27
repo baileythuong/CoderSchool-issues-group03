@@ -30,7 +30,7 @@ export default function MyModal(props) {
                       alt="Generic placeholder"
                       rounded
                     />
-              <Media.Body className="align-self-center">
+              <Media.Body className="container">
               <div className="d-flex">
                 <h5>
                   {props.issue.user ? props.issue.user.login : "Anonymous"}
@@ -60,7 +60,7 @@ export default function MyModal(props) {
             <div>
               <Modal.Body className="container body-image">
                 <ul className="list-unstyled">
-                  <Media className="d-inline-block" as="li">
+                  <Media className="align-self-start" as="li">
                     <Image
                       width={64}
                       height={64}
@@ -80,6 +80,8 @@ export default function MyModal(props) {
                       <p>
                         <ReactMarkdown
                           className="container"
+                          width="100%"
+                          height="auto"
                           source={comment.body}
                           escapeHtml={false}
                           readOnly
