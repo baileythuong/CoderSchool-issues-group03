@@ -265,17 +265,19 @@ export default function Body(props) {
                 </NavDropdown>
 
                 <NavDropdown title="Sort" id="basic-nav-dropdown">
-                  <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                  <NavDropdown.Item href="#action/3.2">
-                    Another action
+                  <NavDropdown.Item href="#Newest" onClick={()=>props.setSortIssues(`created`)}>
+                    Newest
                   </NavDropdown.Item>
-                  <NavDropdown.Item href="#action/3.3">
-                    Something
+                  <NavDropdown.Item href="#RecentlyUpdated" onClick={()=>props.setSortIssues(`updated`)}>
+                    Most recently updated
                   </NavDropdown.Item>
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item href="#action/3.4">
-                    Separated link
+                  <NavDropdown.Item href="#MostCommented" onClick={()=>props.setSortIssues(`comments`)}>
+                    Most Commented
                   </NavDropdown.Item>
+                  {/* <NavDropdown.Item href="#LeastCommented" onClick={()=>{props.setSortIssues(`comments`);props.setSortOrder(`asc`)}}>
+                    Least Commented
+                  </NavDropdown.Item> */}
+                      
                 </NavDropdown>
               </Nav>
             </div>
