@@ -22,6 +22,9 @@
     border-radius: 3px;
 }
 
+.modal-body {
+    padding: 0.7rem;
+}
 /* add style to add issue */
 .link-to-add {
     color: white;
