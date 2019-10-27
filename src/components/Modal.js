@@ -9,7 +9,6 @@ export default function MyModal(props) {
   return (
     <>
       <Modal
-      className="container" 
       show={props.show} 
       onHide={props.onClick}
       size="lg"

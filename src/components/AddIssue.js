@@ -71,13 +71,13 @@ export default function AddIssue(props) {
               </Form.Group>
             </Form>
           </div>
-          <span className="submit-issue-btn   ">
+          <span className="submit-issue-btn">
             <button type="button" className="btn btn-outline-danger" onClick={()=>handleGoBack()}>
               Close
             </button>
             <button
               type="button"
-              className="btn btn-success font-weight-bold"
+              className="btn btn-success font-weight-bold mx-2"
               disabled={!issueTitle ? true : false}
               onClick={() => {postNewIssue(); alert("Thank you for your contribution! <3")}}
             >
