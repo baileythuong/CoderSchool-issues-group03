@@ -9,13 +9,13 @@ export default function MyModal(props) {
 
   return (
     <>
-      <Modal 
+      <Modal
       show={props.show} 
       onHide={props.onClick}
       size="lg"
       aria-labelledby="example-modal-sizes-title-lg"
       >
-        <Modal.Header closeButton>
+        <Modal.Header className="container" closeButton>
           <Modal.Title id="example-modal-sizes-title-lg" className="d-flex"><span>#{props.issue.number} {props.issue.title}&nbsp;</span>
           <h3><Badge variant={props.issue.state === 'open'? "success": "danger"}>{props.issue.state}</Badge></h3>
           </Modal.Title>
@@ -30,12 +30,12 @@ export default function MyModal(props) {
                       alt="Generic placeholder"
                       rounded
                     />
-              <Media.Body className="align-self-center">
-              <div className="d-flex">
+              <Media.Body className="container">
+              <div className="d-inline-flex flex-wrap">
                 <h5>
                   {props.issue.user ? props.issue.user.login : "Anonymous"}
                 </h5>
-                <h6 className="text-muted ml-5">
+                <h6 className="text-muted pl-5 pull-right justify-content-around">
                   opened this issue{" "}
                   <Moment fromNow>{props.issue.created_at}</Moment>
                 </h6>
@@ -47,6 +47,7 @@ export default function MyModal(props) {
         <Modal.Body className="container body-image">
           <samp>
             <ReactMarkdown
+              className="container"
               source={props.issue.body}
               escapeHtml={false}
               readOnly
@@ -59,7 +60,7 @@ export default function MyModal(props) {
             <div>
               <Modal.Body className="container body-image">
                 <ul className="list-unstyled">
-                  <Media as="li">
+                  <Media className="align-self-start" as="li">
                     <Image
                       width={64}
                       height={64}
@@ -71,13 +72,16 @@ export default function MyModal(props) {
                     <Media.Body className="container">
                       <div className="d-flex">
                         <h5>{comment.user.login}</h5>
-                        <h6 className="text-muted ml-5">
+                        <h6 className="text-muted pl-5 pull-right justify-content-around">
                           commented{" "}
                           <Moment fromNow>{comment.updated_at}</Moment>
                         </h6>
                       </div>
                       <p>
                         <ReactMarkdown
+                          className="container"
+                          width="100%"
+                          height="auto"
                           source={comment.body}
                           escapeHtml={false}
                           readOnly

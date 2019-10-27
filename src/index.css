@@ -11,15 +11,23 @@ code {
 
  p > img , span > img {
  width: 100% !important;
+ }
+ 
+p > table {
+  width : 100%;
+  height: auto;
 }
 
-
-
-p > table {
-  width : 100% !important;
+pre code {
+  position: relative;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
 pre {
-  width : 100%;
   background-color: rgb(235, 235, 235);
+}
+
+p img {
+  width: 100% !important;
+  height: auto;
 }

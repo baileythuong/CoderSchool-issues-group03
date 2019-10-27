@@ -3,24 +3,26 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 
 import NavBar from "./components/NavBar";
-import Header from "./components/Header"
+import Header from "./components/Header";
 import Paginations from "./components/Pagination";
 import Body from "./components/Body";
 import Footer from "./components/Footer";
 
 function App() {
   const [token, setToken] = useState(null);
+  const [currentUser, setCurrentUser] = useState({});
   const [repoOwner, setRepoOwner] = useState(`facebook`);
   const [repoName, setRepoName] = useState(`react`);
   const [repoInfo, setRepoInfo] = useState({});
   const [githubIssues, setGithubIssues] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [modalOpen, setModalOpen] = useState(false);
-  const [sortIssues, setSortIssues] = useState(`comments`);
+  const [sortIssues, setSortIssues] = useState(`created`);
   const [filterParameter, setFilterParameter] = useState({});
 
-  console.log("repo", repoOwner, repoName)
+  console.log("repo", repoOwner, repoName);
 
+  console.log(currentUser);
   useEffect(() => {
     const clientId = `05449736a72133433d33`;
     const secretKey = `3643fcfdf9c6ea7a80f04bef6cef10ed44dd491b`;
@@ -40,24 +42,27 @@ function App() {
       // console.log(`New accessToken: ${accessToken}`);
       sessionStorage.setItem("token", accessToken);
       setToken(accessToken);
+      getCurrentUser(accessToken);
     }
 
     if (existingToken) {
       setToken(existingToken);
+      getCurrentUser(accessToken);
     }
   }, []);
 
   useEffect(() => {
+    // getGithubIssuesData();
     getGithubRepo();
   }, []);
 
   useEffect(() => {
     getGithubIssuesData();
-  }, [currentPage]);
+  }, [currentPage, sortIssues]);
 
   // get react issues
   const getGithubIssuesData = async () => {
-    const url = `https://api.github.com/repos/${repoOwner}/${repoName}/issues?state=all&page=${currentPage}&per_page=20&sort=${sortIssues}&order=asc`;
+    const url = `https://api.github.com/repos/${repoOwner}/${repoName}/issues?state=all&page=${currentPage}&per_page=20&sort=${sortIssues}`;
     const response = await fetch(url);
 
     // get header link
@@ -74,6 +79,15 @@ function App() {
     const repoData = await response.json();
     setRepoInfo(repoData);
   };
+  console.log(repoInfo);
+
+  //get current user data (name)
+  const getCurrentUser = async token => {
+    const url = `https://api.github.com/user?access_token=${token}`;
+    const response = await fetch(url);
+    const data = await response.json();
+    setCurrentUser(data);
+  };
 
   return (
     <div className="App">
@@ -85,16 +99,14 @@ function App() {
         getGithubRepo={getGithubRepo}
       />
 
-      <Header 
-      repoOwner={repoOwner}
-      repoName={repoName}
-      />
+      <Header repoOwner={repoOwner} repoName={repoName} token={token} />
       <section className="section">
         <Body
           githubIssues={githubIssues}
           repoInfo={repoInfo}
           repoOwner={repoOwner}
           repoName={repoName}
+          setSortIssues={setSortIssues}
         />
 
         <Paginations

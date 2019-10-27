@@ -11,7 +11,7 @@ export default function Paginations(props) {
 
   return (
     <div>
-      <Pagination className="justify-content-md-center">
+      <Pagination className="container d-flex justify-content-center pt-4">
         <Pagination.First
           disabled={props.currentPage === 1}
           onClick={() => props.setCurrentPage(1)}

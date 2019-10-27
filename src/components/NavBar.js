@@ -13,6 +13,7 @@ export default function NavBar(props) {
   const handleEnterSearch = e => {
     // console.log(e.keyCode)
     if(e.keyCode === 13) {
+      e.preventDefault()
       props.getGithubIssuesData();
       props.getGithubRepo();
       return
