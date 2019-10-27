@@ -50,6 +50,7 @@ function App() {
   }, []);
 
   useEffect(() => {
+    // getGithubIssuesData();
     getGithubRepo();
   }, []);
 
