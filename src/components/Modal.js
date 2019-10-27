@@ -6,6 +6,7 @@ import { Modal, Media, Badge , Image } from "react-bootstrap";
 const ReactMarkdown = require('react-markdown')
 
 export default function MyModal(props) {
+
   return (
     <>
       <Modal 
@@ -83,6 +84,8 @@ export default function MyModal(props) {
                         />
                       </p>
                     </Media.Body>
+                    {/* <CommentReaction 
+                    comment={comment.id} /> */}
                   </Media>
                   <hr />
                 </ul>

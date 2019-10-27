@@ -9,7 +9,7 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
- p , span > img {
+ p > img , span > img {
  width: 100% !important;
 }
 
