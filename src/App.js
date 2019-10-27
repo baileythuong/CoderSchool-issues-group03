@@ -20,9 +20,7 @@ function App() {
   const [sortIssues, setSortIssues] = useState(`created`);
   const [filterParameter, setFilterParameter] = useState({});
 
-  console.log("repo", repoOwner, repoName);
 
-  console.log(currentUser);
   useEffect(() => {
     const clientId = `05449736a72133433d33`;
     const secretKey = `3643fcfdf9c6ea7a80f04bef6cef10ed44dd491b`;
@@ -79,7 +77,7 @@ function App() {
     const repoData = await response.json();
     setRepoInfo(repoData);
   };
-  console.log(repoInfo);
+
 
   //get current user data (name)
   const getCurrentUser = async token => {
@@ -107,6 +105,7 @@ function App() {
           repoOwner={repoOwner}
           repoName={repoName}
           setSortIssues={setSortIssues}
+          currentUser={currentUser}
         />
 
         <Paginations

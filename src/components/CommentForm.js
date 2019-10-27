@@ -11,7 +11,7 @@ class CommentForm extends React.Component {
             comments: [],
             comment:{
                 id : 0,
-                name : 'Hansol',
+                name : props.currentuser.login,
                 message : '',
                 time : ''
             },
@@ -44,7 +44,7 @@ class CommentForm extends React.Component {
         this.setState(prevState => ({
           comment : {
               ...prevState.comment,
-              id: this.state.num ++
+              id: this.state.num ++,
           }
         })
         )
@@ -78,6 +78,7 @@ class CommentForm extends React.Component {
             <CommentList 
             comments = {this.state.comments}
             removeComment = {this.removeComment}
+            currentuser = {this.props.currentuser}
              />
             </Modal.Body>   
             <Modal.Body>

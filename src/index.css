@@ -5,6 +5,14 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+ p > img , span > img {
+ width: 100% !important;
+ }
+ 
 p > table {
   width : 100%;
   height: auto;

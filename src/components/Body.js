@@ -25,6 +25,8 @@ export default function Body(props) {
     setGithubComments(githubComments);
   };
 
+
+
   const handleClose = () => {
     setModalShow(false);
   };
@@ -289,6 +291,7 @@ export default function Body(props) {
           onClick={handleClose}
           issue={issue}
           comments={githubComments}
+          currentuser={props.currentUser}
         />
       </div>
     </>
