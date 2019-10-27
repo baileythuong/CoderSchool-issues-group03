@@ -1,36 +1,33 @@
+const http = require('http');
+const request = require('request');
+require('dotenv').config();
+
 const clientId = `05449736a72133433d33`
 const secretKey = `3643fcfdf9c6ea7a80f04bef6cef10ed44dd491b`
 
-var express = require("express"),
-    app = express(),
-    port = process.env.PORT || 5000;
+console.log('Started server on port 5000');
+console.log('ID:', clientId);
+console.log('secret key:', secretKey);
 
-var githubOAuth = require('github-oauth')({
-  githubClient: clientId,
-  githubSecret: secretKey,
-  baseURL: 'http://localhost:' + port,
-  loginURI: '/auth/github',
-  callbackURI: '/auth/github/callback'
-})
-
-app.get("/auth/github", function(req, res){
-  console.log("started oauth");
-  return githubOAuth.login(req, res);
-});
-
-app.get("/auth/github/callback", function(req, res){
-  console.log("received callback");
-  return githubOAuth.callback(req, res);
-});
-
-githubOAuth.on('error', function(err) {
-  console.error('there was a login error', err)
-})
-
-githubOAuth.on('token', function(token, serverResponse) {
-  serverResponse.end(JSON.stringify(token))
-})
-
-var server = app.listen(port, function() {
-  console.log('Listening on port %d', server.address().port);
-});
+http.createServer((req, res) => {
+  var code = req.url.split("=")[1];
+  if (code) {
+    request.post('https://github.com/login/oauth/access_token', {
+      form: {
+        client_id: clientId,
+        client_secret: secretKey,
+        code: code
+      }
+    }, (err, r, body) => {
+      console.log('Hi I got a request(server)')
+      res.writeHead(301, {
+        'Location': 'http://localhost:3000?' + body
+      });
+      res.end();
+    })
+    
+  } else {
+    res.writeHead(404);
+    res.end();
+  }
+}).listen(process.env.PORT || 5000);
