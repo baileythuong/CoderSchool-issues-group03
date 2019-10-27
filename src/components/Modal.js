@@ -8,13 +8,14 @@ const ReactMarkdown = require('react-markdown')
 export default function MyModal(props) {
   return (
     <>
-      <Modal 
+      <Modal
+      className="container" 
       show={props.show} 
       onHide={props.onClick}
       size="lg"
       aria-labelledby="example-modal-sizes-title-lg"
       >
-        <Modal.Header closeButton>
+        <Modal.Header className="container" closeButton>
           <Modal.Title id="example-modal-sizes-title-lg" className="d-flex"><span>#{props.issue.number} {props.issue.title}&nbsp;</span>
           <h3><Badge variant={props.issue.state === 'open'? "success": "danger"}>{props.issue.state}</Badge></h3>
           </Modal.Title>
@@ -46,6 +47,7 @@ export default function MyModal(props) {
         <Modal.Body className="container body-image">
           <samp>
             <ReactMarkdown
+              className="container"
               source={props.issue.body}
               escapeHtml={false}
               readOnly
@@ -58,7 +60,7 @@ export default function MyModal(props) {
             <div>
               <Modal.Body className="container body-image">
                 <ul className="list-unstyled">
-                  <Media as="li">
+                  <Media className="d-inline-block" as="li">
                     <Image
                       width={64}
                       height={64}
@@ -77,6 +79,7 @@ export default function MyModal(props) {
                       </div>
                       <p>
                         <ReactMarkdown
+                          className="container"
                           source={comment.body}
                           escapeHtml={false}
                           readOnly
