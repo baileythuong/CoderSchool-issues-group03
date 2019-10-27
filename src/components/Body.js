@@ -18,7 +18,6 @@ export default function Body(props) {
   const [labelList, setLabelList] = useState([]);
 
   const getGithubComments = async issue => {
-    console.log("issue num", issue.number);
     const url = `https://api.github.com/repos/${props.repoOwner}/${props.repoName}/issues/${issue.number}/comments`;
     const response = await fetch(url);
     const githubComments = await response.json();
@@ -56,7 +55,7 @@ export default function Body(props) {
       );
     }
   };
-  console.log("githubIssues", props.githubIssues);
+  
 
   const getLabels = async () => {
     const url = `https://api.github.com/repos/${props.repoOwner}/${props.repoName}/labels`;

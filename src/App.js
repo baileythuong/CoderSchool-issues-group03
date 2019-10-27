@@ -3,12 +3,10 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 
 import NavBar from "./components/NavBar";
+import Header from "./components/Header"
 import Paginations from "./components/Pagination";
 import Body from "./components/Body";
-import Footer from "./components/Footer"
-
-// import data from './components/data'
-// console.log('fakedata', data)
+import Footer from "./components/Footer";
 
 function App() {
   const [token, setToken] = useState(null);
@@ -18,9 +16,11 @@ function App() {
   const [githubIssues, setGithubIssues] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [modalOpen, setModalOpen] = useState(false);
-  const [sortIssues, setSortIssues] = useState(`comments`)
-  const [filterParameter, setFilterParameter] = useState({})
-  
+  const [sortIssues, setSortIssues] = useState(`comments`);
+  const [filterParameter, setFilterParameter] = useState({});
+
+  console.log("repo", repoOwner, repoName)
+
   useEffect(() => {
     const clientId = `05449736a72133433d33`;
     const secretKey = `3643fcfdf9c6ea7a80f04bef6cef10ed44dd491b`;
@@ -38,15 +38,12 @@ function App() {
 
     if (accessToken) {
       // console.log(`New accessToken: ${accessToken}`);
-
       sessionStorage.setItem("token", accessToken);
       setToken(accessToken);
     }
 
     if (existingToken) {
       setToken(existingToken);
-      // console.log("hansol", existingToken);
-      console.log(existingToken);
     }
   }, []);
 
@@ -60,7 +57,7 @@ function App() {
   }, [currentPage]);
   // get react issues
   const getGithubIssuesData = async () => {
-    const url = `https://api.github.com/repos/${repoOwner}/${repoName}/issues?page=${currentPage}&per_page=20&sort=${sortIssues}&order=asc`;
+    const url = `https://api.github.com/repos/${repoOwner}/${repoName}/issues?state=all&page=${currentPage}&per_page=20&sort=${sortIssues}&order=asc`;
     const response = await fetch(url);
 
     // get header link
@@ -87,6 +84,11 @@ function App() {
         getGithubIssuesData={getGithubIssuesData}
         getGithubRepo={getGithubRepo}
       />
+
+      <Header 
+      repoOwner={repoOwner}
+      repoName={repoName}
+      />
       <section className="section">
         <Body
           githubIssues={githubIssues}
@@ -94,7 +96,7 @@ function App() {
           repoOwner={repoOwner}
           repoName={repoName}
         />
-        {/* <Modal /> */}
+
         <Paginations
           repoInfo={repoInfo}
           currentPage={currentPage}
