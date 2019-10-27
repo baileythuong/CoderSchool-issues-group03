@@ -20,7 +20,6 @@ function App() {
   const [sortIssues, setSortIssues] = useState(`created`);
   const [filterParameter, setFilterParameter] = useState({});
 
-  console.log(currentUser)
   useEffect(() => {
     const clientId = `05449736a72133433d33`;
     const secretKey = `3643fcfdf9c6ea7a80f04bef6cef10ed44dd491b`;

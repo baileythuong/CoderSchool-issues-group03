@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom"
 const ReactMarkdown = require("react-markdown");
 
 export default function AddIssue(props) {
+  // console.log(props.token)
   const placeholder = `
       <!--
       Note: if the issue is about documentation or the website, please file it at:
@@ -38,9 +39,10 @@ export default function AddIssue(props) {
     const response = await fetch(url, {
       method: "POST",
       header: {
+        // "User-Agent": "Mozilla/5.0",
         "Accept": "application/vnd.github.symmetra-preview+json",
         "Content-Type":"application/json",
-        Authorization: `token ${props.token}` 
+        Authorization: `token ${props.token && props.token.split("&")[0]}` 
       },
       body: JSON.stringify(data)
     });
