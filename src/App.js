@@ -3,14 +3,14 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 
 import NavBar from "./components/NavBar";
-import Header from "./components/Header"
+import Header from "./components/Header";
 import Paginations from "./components/Pagination";
 import Body from "./components/Body";
 import Footer from "./components/Footer";
 
 function App() {
   const [token, setToken] = useState(null);
-  const [currentUser, setCurrentUser] = useState({})
+  const [currentUser, setCurrentUser] = useState({});
   const [repoOwner, setRepoOwner] = useState(`facebook`);
   const [repoName, setRepoName] = useState(`react`);
   const [repoInfo, setRepoInfo] = useState({});
@@ -20,7 +20,9 @@ function App() {
   const [sortIssues, setSortIssues] = useState(`created`);
   const [filterParameter, setFilterParameter] = useState({});
 
-  console.log(currentUser)
+  console.log("repo", repoOwner, repoName);
+
+  console.log(currentUser);
   useEffect(() => {
     const clientId = `05449736a72133433d33`;
     const secretKey = `3643fcfdf9c6ea7a80f04bef6cef10ed44dd491b`;
@@ -77,6 +79,7 @@ function App() {
     const repoData = await response.json();
     setRepoInfo(repoData);
   };
+  console.log(repoInfo);
 
   //get current user data (name)
   const getCurrentUser = async token => {
@@ -85,7 +88,6 @@ function App() {
     const data = await response.json();
     setCurrentUser(data);
   };
-
 
   return (
     <div className="App">
@@ -97,11 +99,7 @@ function App() {
         getGithubRepo={getGithubRepo}
       />
 
-      <Header 
-      repoOwner={repoOwner}
-      repoName={repoName}
-      token = {token}
-      />
+      <Header repoOwner={repoOwner} repoName={repoName} token={token} />
       <section className="section">
         <Body
           githubIssues={githubIssues}

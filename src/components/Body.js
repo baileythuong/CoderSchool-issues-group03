@@ -6,6 +6,7 @@ import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import MyModal from "./Modal";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Badge from "react-bootstrap/Badge";
 import Tooltip from "react-bootstrap/Tooltip";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
@@ -55,13 +56,62 @@ export default function Body(props) {
       );
     }
   };
-  
 
   const getLabels = async () => {
     const url = `https://api.github.com/repos/${props.repoOwner}/${props.repoName}/labels`;
     const response = await fetch(url);
     const labelList = await response.json();
     setLabelList(labelList);
+    console.log(labelList);
+  };
+
+  // const getIssuesByLabels = async () => {
+  //   const response = await fetch(
+  //     `https://api.github.com/search/labels?repository_id=10270250&q=bug&per_page=100`,
+  //     {
+  //       method: "GET",
+  //       headers: new Headers({
+  //         Accept: "application/vnd.github.symmetra-preview+json"
+  //       })
+  //     }
+  //   );
+  //   const OK = await response.json();
+  //   console.log("YA", OK);
+  // };
+  // getIssuesByLabels();
+
+  const renderLabelBadge = issue => {
+    if (issue.labels)
+      return issue.labels.map(label => {
+        if (
+          label.color == "b60205" ||
+          label.color == "5319e7" ||
+          label.color == "e11d21" ||
+          label.color == "cc317c" ||
+          label.color == "aa2608" ||
+          label.color == "f9a798" ||
+          label.color == "f2687c" ||
+          label.color == "94ce52"
+        ) {
+          return (
+            <Badge
+              className="mx-1"
+              style={{ backgroundColor: `#${label.color}`, color: "white" }}
+            >
+              {label.name}
+            </Badge>
+          );
+        } else {
+          return (
+            <Badge
+              className="mx-1"
+              style={{ backgroundColor: `#${label.color}` }}
+            >
+              {label.name}
+            </Badge>
+          );
+        }
+      });
   };
 
   const renderIssueList = () => {
@@ -94,7 +144,9 @@ export default function Body(props) {
                       {issue.title}
                     </a>
                   </strong>
+                  <span>{renderLabelBadge(issue)}</span>
                 </h6>
+
                 <h6 className="small">
                   #{issue.id} opened <Moment fromNow>{issue.created_at}</Moment>{" "}
                   by{" "}
@@ -151,20 +203,6 @@ export default function Body(props) {
                       }}
                       variant="flush"
                     >
-                      {/* {labelList.map(label => {
-                        return (
-                          <NavDropdown.Item
-                            className="small"
-                            href="#action/3.1"
-                          >
-                            <span
-                              className="label-select-menu"
-                              style={{ backgroundColor: `#${label.color}` }}
-                            ></span>{" "}
-                            {label.name}
-                          </NavDropdown.Item>
-                        );
-                      })} */}
                       {labelList.map(label => {
                         return (
                           <ListGroup.Item
