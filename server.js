@@ -21,8 +21,7 @@ http.createServer((req, res) => {
     }, (err, r, body) => {
       console.log('Hi I got a request(server)')
       res.writeHead(301, {
-        // 'Location': 'http://localhost:3000?' + body
-        'Location': 'https://group3-github-issues.herokuapp.com/' + body
+        'Location': 'http://localhost:3000?' + body
       });
       res.end();
     })
