@@ -16,10 +16,8 @@ function App() {
   const [githubIssues, setGithubIssues] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [modalOpen, setModalOpen] = useState(false);
-  const [sortIssues, setSortIssues] = useState(`comments`);
+  const [sortIssues, setSortIssues] = useState(`created`);
   const [filterParameter, setFilterParameter] = useState({});
-
-  console.log("repo", repoOwner, repoName)
 
   useEffect(() => {
     const clientId = `05449736a72133433d33`;
@@ -53,11 +51,11 @@ function App() {
 
   useEffect(() => {
     getGithubIssuesData();
-  }, [currentPage]);
+  }, [currentPage, sortIssues]);
 
   // get react issues
   const getGithubIssuesData = async () => {
-    const url = `https://api.github.com/repos/${repoOwner}/${repoName}/issues?state=all&page=${currentPage}&per_page=20&sort=${sortIssues}&order=asc`;
+    const url = `https://api.github.com/repos/${repoOwner}/${repoName}/issues?state=all&page=${currentPage}&per_page=20&sort=${sortIssues}`;
     const response = await fetch(url);
 
     // get header link
@@ -88,6 +86,7 @@ function App() {
       <Header 
       repoOwner={repoOwner}
       repoName={repoName}
+      token = {token}
       />
       <section className="section">
         <Body
@@ -95,6 +94,7 @@ function App() {
           repoInfo={repoInfo}
           repoOwner={repoOwner}
           repoName={repoName}
+          setSortIssues={setSortIssues}
         />
 
         <Paginations
