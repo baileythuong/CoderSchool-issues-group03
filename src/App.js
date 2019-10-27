@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 
 import NavBar from "./components/NavBar";
-import Header from "./components/Header"
+import Header from "./components/Header";
 import Paginations from "./components/Pagination";
 import Body from "./components/Body";
 import Footer from "./components/Footer";
@@ -19,7 +19,7 @@ function App() {
   const [sortIssues, setSortIssues] = useState(`comments`);
   const [filterParameter, setFilterParameter] = useState({});
 
-  console.log("repo", repoOwner, repoName)
+  console.log("repo", repoOwner, repoName);
 
   useEffect(() => {
     const clientId = `05449736a72133433d33`;
@@ -74,7 +74,7 @@ function App() {
     const repoData = await response.json();
     setRepoInfo(repoData);
   };
-
+  console.log(repoInfo);
   return (
     <div className="App">
       {/* <h1>Hello World!</h1> */}
@@ -85,10 +85,7 @@ function App() {
         getGithubRepo={getGithubRepo}
       />
 
-      <Header 
-      repoOwner={repoOwner}
-      repoName={repoName}
-      />
+      <Header repoOwner={repoOwner} repoName={repoName} />
       <section className="section">
         <Body
           githubIssues={githubIssues}
