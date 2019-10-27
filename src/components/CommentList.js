@@ -3,7 +3,6 @@ import Moment from "react-moment";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { Modal , Image, Media } from "react-bootstrap";
-import profile from '../img/profile.png'
 
 export default function CommentList(props) {
   return (
@@ -16,7 +15,7 @@ export default function CommentList(props) {
                   width={64}
                   height={64}
                   className="mr-3"
-                  src={profile}
+                  src={props.currentuser.avatar_url}
                   alt="Profile Image"
                   rounded
                 />

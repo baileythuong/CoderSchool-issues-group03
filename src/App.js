@@ -107,6 +107,7 @@ function App() {
           repoOwner={repoOwner}
           repoName={repoName}
           setSortIssues={setSortIssues}
+          currentUser={currentUser}
         />
 
         <Paginations

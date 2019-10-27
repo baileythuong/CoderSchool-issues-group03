@@ -18,7 +18,6 @@ export default function Body(props) {
   const [githubComments, setGithubComments] = useState([]);
   const [labelList, setLabelList] = useState([]);
 
-
   const getGithubComments = async issue => {
     const url = `https://api.github.com/repos/${props.repoOwner}/${props.repoName}/issues/${issue.number}/comments`;
     const response = await fetch(url);
@@ -292,6 +291,7 @@ export default function Body(props) {
           onClick={handleClose}
           issue={issue}
           comments={githubComments}
+          currentuser={props.currentUser}
         />
       </div>
     </>

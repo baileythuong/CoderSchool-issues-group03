@@ -97,7 +97,8 @@ export default function MyModal(props) {
             </div>
           );
         })}
-      <CommentForm />
+      <CommentForm 
+      currentuser={props.currentuser} />
       </Modal>
     </>
   );
