@@ -30,7 +30,7 @@ export default function MyModal(props) {
                       rounded
                     />
               <Media.Body className="container">
-              <div className="d-flex">
+              <div className="d-inline-flex flex-wrap">
                 <h5>
                   {props.issue.user ? props.issue.user.login : "Anonymous"}
                 </h5>
