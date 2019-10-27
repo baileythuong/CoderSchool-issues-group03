@@ -34,7 +34,7 @@ export default function MyModal(props) {
                 <h5>
                   {props.issue.user ? props.issue.user.login : "Anonymous"}
                 </h5>
-                <h6 className="text-muted ml-5">
+                <h6 className="text-muted pl-5 pull-right justify-content-around">
                   opened this issue{" "}
                   <Moment fromNow>{props.issue.created_at}</Moment>
                 </h6>
@@ -71,7 +71,7 @@ export default function MyModal(props) {
                     <Media.Body className="container">
                       <div className="d-flex">
                         <h5>{comment.user.login}</h5>
-                        <h6 className="text-muted ml-5">
+                        <h6 className="text-muted pl-5 pull-right justify-content-around">
                           commented{" "}
                           <Moment fromNow>{comment.updated_at}</Moment>
                         </h6>
