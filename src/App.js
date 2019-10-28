@@ -31,6 +31,7 @@ function App() {
         ? window.location.search.split("=")[1]
         : null;
     if (!accessToken && !existingToken) {
+      console.log('object');
       window.location.replace(
         `https://github.com/login/oauth/authorize?scope=user:email,repo&client_id=${clientId}&client_secret=${secretKey}`
       );
